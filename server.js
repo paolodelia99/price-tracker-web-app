@@ -1,12 +1,19 @@
 const express = require('express');
 const path = require('path');
+const connectDB = require('./config/db');
 
 const app = express();
+
+//Connect Database
+connectDB();
 
 //Init Middleware
 app.use(express.json({extended: false}));
 
 //Define Routes
+app.use('/api/auth/',require('./routes/api/auth'));
+app.use('/api/user/',require('./routes/api/user'));
+app.use('/api/profile/',require('./routes/api/profile'))
 app.use('/api/stock/', require('./routes/api/stock'));
 app.use('/api/forex/',require('./routes/api/forex'));
 app.use('/api/crypto/',require('./routes/api/crypto'));

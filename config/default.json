@@ -1,3 +1,5 @@
 {
-  "ALPHA_API_KEY": "insert your api key"
+  "ALPHA_API_KEY": "2R9XUCRT0D21IUVX",
+  "mongoURI": "mongodb+srv://PaoloTrade:Uyy6fsdpHScRWg8I@price-tracker-cluster-dzzzh.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "priceTracker"
 }
