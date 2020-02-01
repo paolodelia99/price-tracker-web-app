@@ -42,7 +42,7 @@ npm run build
 
 # add uri of your mongodb connection for example
 
- "mongoURI": "mongodb://localhost/dev-social",
+ "mongoURI": "mongodb://localhost/price-tracker",
  
 # add your alpha vantage api key (which is free)
 
