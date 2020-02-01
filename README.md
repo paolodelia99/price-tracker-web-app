@@ -6,6 +6,7 @@ That web app is for you!
 
 Since I'm little bit interesting in finance, I was thinking about creating my own app that keep tracks of all my favorites stock, forex exchange and cripocurrency.
 And now that I have the skills to do it, I made it!
+
 ---
 
 # App Info
