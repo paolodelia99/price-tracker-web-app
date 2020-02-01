@@ -4,7 +4,7 @@ export const productValuesStyle = makeStyles(theme => ({
     root: {
         display: 'flex',
         overflow: 'hidden',
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.primary.dark,
     },
     container: {
         marginTop: theme.spacing(15),
@@ -24,6 +24,7 @@ export const productValuesStyle = makeStyles(theme => ({
     title: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
+        fontSize: '2rem'
     },
     curvyLines: {
         pointerEvents: 'none',

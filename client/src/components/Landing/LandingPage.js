@@ -12,11 +12,11 @@ const LandingPage = ({isAuthenticated}) => {
     }
 
     return (
-        <Fragment>
+        <section className="landing-page">
             <ProductHero/>
             <ProductValues/>
             <ProductHowItWorks/>
-        </Fragment>
+        </section>
     );
 };
 

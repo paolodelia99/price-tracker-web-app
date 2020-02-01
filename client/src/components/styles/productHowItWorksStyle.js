@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export const productHeroLayoutStyle = makeStyles(theme => ({
     root: {
         display: 'flex',
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.primary.light,
         overflow: 'hidden',
     },
     container: {
@@ -22,12 +22,14 @@ export const productHeroLayoutStyle = makeStyles(theme => ({
     },
     title: {
         marginBottom: theme.spacing(14),
+        fontSize: '2rem'
     },
     number: {
         fontSize: 24,
         fontFamily: theme.typography.fontFamily,
         color: theme.palette.secondary.main,
         fontWeight: theme.typography.fontWeightMedium,
+        marginBottom: theme.spacing(3)
     },
     image: {
         height: 55,
@@ -43,4 +45,7 @@ export const productHeroLayoutStyle = makeStyles(theme => ({
     button: {
         marginTop: theme.spacing(8),
     },
+    text : {
+        marginTop: theme.spacing(4)
+    }
 }))
