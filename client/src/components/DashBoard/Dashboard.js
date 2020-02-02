@@ -33,6 +33,7 @@ import { logout } from "../../actions/auth";
 import {getStock, takeOutStock} from "../../actions/stock";
 import {getForex,takeOutForex} from "../../actions/forex";
 import {getCrypto,takeOutCrypto} from "../../actions/crypto";
+import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
 import Button from "@material-ui/core/Button";
 import SelectedItem from "./SelectedItem";
@@ -48,7 +49,9 @@ const Dashboard = (
         getCrypto,
         takeOutStock,
         takeOutForex,
-        takeOutCrypto
+        takeOutCrypto,
+        setSelectedItem,
+        removeSelectedItem
     }) => {
     useEffect(()=>{
         getCurrentProfile();
@@ -69,13 +72,15 @@ const Dashboard = (
 
     const setCurrentStock = (stockName) => {
         getStock(stockName);
-        takeOutCrypto()
-        takeOutForex()
+        setSelectedItem('stock');
+        takeOutCrypto();
+        takeOutForex();
         setItemSelected(true);
     };
 
     const setCurrentForex = (forexExchange) => {
         getForex(forexExchange);
+        setSelectedItem('forex');
         takeOutCrypto();
         takeOutStock();
         setItemSelected(true)
@@ -83,6 +88,7 @@ const Dashboard = (
 
     const setCurrentCrypto = (cryptoName) => {
         getCrypto(cryptoName);
+        setSelectedItem('crypto');
         takeOutForex();
         takeOutStock();
         setItemSelected(true)
@@ -214,7 +220,9 @@ Dashboard.propTypes = {
     getForex: PropTypes.func.isRequired,
     takeOutForex: PropTypes.func.isRequired,
     getCrypto: PropTypes.func.isRequired,
-    takeOutCrypto: PropTypes.func.isRequired
+    takeOutCrypto: PropTypes.func.isRequired,
+    removeSelectedItem: PropTypes.func.isRequired,
+    setSelectedItem: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -231,5 +239,7 @@ export default connect(
         getForex,
         takeOutForex,
         getCrypto,
-        takeOutCrypto
+        takeOutCrypto,
+        setSelectedItem,
+        removeSelectedItem
     })(Dashboard);

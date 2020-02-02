@@ -19,7 +19,7 @@ const Spinner = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <CircularProgress style={{margin: 'auto', width: '50px', display: 'block'}}/>
+                    <CircularProgress color='primary' style={{margin: 'auto', width: '50px', display: 'block'}}/>
                 </div>
             </div>
         </Fragment>

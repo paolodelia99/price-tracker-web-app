@@ -6,7 +6,7 @@ import Plot from 'react-plotly.js';
 
 const CryptoItem = ({crypto: {crypto,loading}}) => {
 
-    return loading && crypto === null ? (
+    return (loading && crypto === null) ? (
         <Spinner/>
     ) : (
         <div>

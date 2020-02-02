@@ -4,13 +4,35 @@ import ForexItem from "../FinancialItem/ForexItem";
 import CryptoItem from "../FinancialItem/CryptoItem";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Spinner from "../Layout/Spinner";
 
-const SelectedItem = ({stock:{stock},forex:{forex},crypto:{crypto}}) => {
+
+const SelectedItem =
+    ({
+         profile:{selectedItem},
+         stock:{stock},
+         forex:{forex},
+         crypto:{crypto}}
+         ) => {
+
+    const rightComponent = () =>{
+        switch (selectedItem) {
+            case 'stock':
+                return (<StockItem/>);
+            case 'forex':
+                return (<ForexItem/>);
+            case 'crypto':
+                return (<CryptoItem/>);
+            default:
+                return (
+                    <Spinner/>
+                )
+        }
+    }
+
     return (
         <div className='selected-item-wrapper'>
-            {stock !== null ? (<StockItem/>) : null}
-            {forex !== null ? (<ForexItem/>): null}
-            {crypto !== null ? (<CryptoItem/>): null}
+            {rightComponent()}
         </div>
     );
 };
@@ -22,6 +44,7 @@ SelectedItem.protoTypes = {
 }
 
 const mapStateToProps = state => ({
+    profile: state.profile,
     stock: state.stock,
     forex: state.forex,
     crypto: state.crypto

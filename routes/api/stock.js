@@ -12,10 +12,6 @@ const apiKey = config.get('ALPHA_API_KEY');
 router.get('/weekly/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
             const content = JSON.parse(body);
 
             res.json(content)
@@ -32,10 +28,6 @@ router.get('/weekly/:stock_name',async (req,res)=>{
 router.get('/weekly-adjusted/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
             const content = JSON.parse(body);
 
             res.json(content)
@@ -52,9 +44,6 @@ router.get('/weekly-adjusted/:stock_name',async (req,res)=>{
 router.get('/monthly/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 
@@ -72,10 +61,6 @@ router.get('/monthly/:stock_name',async (req,res)=>{
 router.get('/monthly-adjusted/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
             const content = JSON.parse(body);
 
             res.json(content)
@@ -92,9 +77,6 @@ router.get('/monthly-adjusted/:stock_name',async (req,res)=>{
 router.get('/daily/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 
@@ -112,10 +94,6 @@ router.get('/daily/:stock_name',async (req,res)=>{
 router.get('/daily-adjusted/:stock_name',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.params.stock_name}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
             const content = JSON.parse(body);
 
             res.json(content)
@@ -131,11 +109,8 @@ router.get('/daily-adjusted/:stock_name',async (req,res)=>{
 // @access   Public
 router.get('/search/:stock_name',async (req,res)=>{
     try{
-        await request(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${req.params.stock_name}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
+        await request(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${req.params.stock_name}&apikey=${apiKey}`,
+            (err,response, body) => {
             const content = JSON.parse(body);
 
             res.json(content)

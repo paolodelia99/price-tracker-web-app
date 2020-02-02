@@ -5,7 +5,7 @@ import {
     GET_PROFILE,
     PROFILE_ERROR,
     UPDATE_PROFILE,
-    CLEAR_PROFILE,
+    CLEAR_PROFILE, SET_SELECTED_ITEM, REMOVE_SELECTED_ITEM,
 } from './types';
 
 // Get current users profile
@@ -23,6 +23,19 @@ export const getCurrentProfile = () => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+};
+
+export const setSelectedItem = (itemType) => dispatch => {
+    dispatch({
+        type: SET_SELECTED_ITEM,
+        payload: itemType
+    })
+};
+
+export const removeSelectedItem = () => dispatch => {
+    dispatch({
+        type: REMOVE_SELECTED_ITEM,
+    })
 };
 
 // Create or update profile

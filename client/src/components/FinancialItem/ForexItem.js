@@ -6,7 +6,7 @@ import Plot from 'react-plotly.js';
 
 const ForexItem = ({forex: {forex,loading}}) => {
 
-    return loading && forex === null ? (
+    return (loading && forex === null) ? (
         <Spinner/>
     ) : (
         <div>

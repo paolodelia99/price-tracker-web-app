@@ -1,10 +1,12 @@
 import React,{useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Spinner from "../Layout/Spinner";
+import Spinner from '../Layout/Spinner'
 import Plot from 'react-plotly.js';
 
 const StockItem = ({stock: {loading, stock}}) =>{
+
+    //fixme: implement https://plot.ly/javascript/candlestick-charts/
 
     return (loading && stock === null) ? (
         <Spinner/>
@@ -21,6 +23,7 @@ const StockItem = ({stock: {loading, stock}}) =>{
                     }
                 ]}
                 layout={{width: 720, height: 440, title: stock.stockName}}
+                options ={ {displaylogo: 'false'} }
             />
         </div>
     );

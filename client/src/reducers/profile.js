@@ -2,7 +2,7 @@ import {
     GET_PROFILE,
     UPDATE_PROFILE,
     PROFILE_ERROR,
-    CLEAR_PROFILE
+    CLEAR_PROFILE, SET_SELECTED_ITEM, REMOVE_SELECTED_ITEM
 } from "../actions/types";
 
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
     forex: [],
     crypto: [],
     loading: true,
+    selectedItem: null,
     error: {}
 };
 
@@ -44,6 +45,16 @@ export default function (state= initialState,action) {
                 crypto: [],
                 loading: false
             };
+        case SET_SELECTED_ITEM:
+            return {
+                ...state,
+                selectedItem: payload
+            };
+        case REMOVE_SELECTED_ITEM:
+            return {
+                ...state,
+                selectedItem: null
+            }
         default:
             return state
     }
