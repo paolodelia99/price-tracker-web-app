@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {dashboardStyle} from './styles/dashboardStyle'
 
-class Dashboard extends Component {
-    render() {
+const Dashboard =  () => {
+    const classes = dashboardStyle();
         return (
             <div>
                 ciao
             </div>
         );
-    }
 }
 
 export default Dashboard;

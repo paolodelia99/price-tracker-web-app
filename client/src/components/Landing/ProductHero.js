@@ -13,11 +13,11 @@ function ProductHero(props) {
         <ProductHeroLayout backgroundClassName={classes.background}>
             {/* Increase the network loading priority of the background image. */}
             <img style={{ display: 'none' }} src={FintechImg} alt="increase priority" />
-            <Typography color="inherit" align="center"  marked="center">
+            <Typography color="inherit" align="center"  marked="center" className={classes.mainTitle}>
                 Track Your Favourites Stock
             </Typography>
             <Typography color="inherit" align="center" className={classes.h5}>
-                testo da inserire
+                The web app you're missing for your favorite financial instrument
             </Typography>
             <Link to='/register'>
                 <Button

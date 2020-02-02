@@ -10,6 +10,10 @@ export const productHeroStyle = makeStyles(theme => ({
     button: {
         minWidth: 200,
     },
+    mainTitle: {
+      fontSize: '3rem',
+
+    },
     h5: {
         marginBottom: theme.spacing(4),
         marginTop: theme.spacing(4),
@@ -18,7 +22,7 @@ export const productHeroStyle = makeStyles(theme => ({
         },
     },
     more: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(3),
     },
 })
 );

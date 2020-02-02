@@ -19,6 +19,9 @@ export const productHeroLayoutStyle = makeStyles(theme => ({
             flexDirection: 'column',
             alignItems: 'center',
         },
+        downArrow: {
+          marginTop: '10px'
+        },
         backdrop: {
             position: 'absolute',
             left: 0,

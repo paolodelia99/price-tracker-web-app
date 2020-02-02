@@ -2,9 +2,11 @@ import React,{Fragment} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from '@material-ui/styles';
 import ProductHero from "./ProductHero";
 import ProductValues from "./ProductValues";
 import ProductHowItWorks from "./ProductHowItWorks";
+import {landingTheme} from '../styles/landingTheme';
 
 const LandingPage = ({isAuthenticated}) => {
     if(isAuthenticated){
@@ -12,11 +14,13 @@ const LandingPage = ({isAuthenticated}) => {
     }
 
     return (
-        <section className="landing-page">
-            <ProductHero/>
-            <ProductValues/>
-            <ProductHowItWorks/>
-        </section>
+        <ThemeProvider theme={landingTheme}>
+            <section className="landing-page">
+                <ProductHero/>
+                <ProductValues/>
+                <ProductHowItWorks/>
+            </section>
+        </ThemeProvider>
     );
 };
 

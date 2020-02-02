@@ -15,7 +15,7 @@ function ProductHeroLayout(props) {
                 {children}
                 <div className={classes.backdrop} />
                 <div className={clsx(classes.background, backgroundClassName)} />
-                <Icon>arrow_downward</Icon>
+                <Icon className={classes.downArrow}>arrow_downward</Icon>
             </Container>
         </section>
     );

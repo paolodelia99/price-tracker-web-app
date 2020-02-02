@@ -16,11 +16,6 @@ function ProductHowItWorks(props) {
     return (
         <section className={classes.root}>
             <Container className={classes.container}>
-                <img
-                    src="/static/themes/onepirate/productCurvyLines.png"
-                    className={classes.curvyLines}
-                    alt="curvy lines"
-                />
                 <Typography marked="center" className={classes.title} component="h2">
                     How it works
                 </Typography>
