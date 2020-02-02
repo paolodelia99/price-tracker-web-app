@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Register from "./auth/Register";
-import Login from "./auth/Login";
+import Register from "../auth/Register";
+import Login from "../auth/Login";
 import Alert from "./Alert";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "./NotFound";
-import Dashboard from "./Dashboard";
+import Dashboard from "../DashBoard/Dashboard";
 
 const Routes = () => {
     return (

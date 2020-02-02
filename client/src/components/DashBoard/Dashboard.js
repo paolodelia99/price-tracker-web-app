@@ -17,18 +17,23 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import Spinner from "./Layout/Spinner";
-import {dashboardStyle} from './styles/dashboardStyle'
-import {landingTheme} from "./styles/landingTheme";
+import Spinner from "../Layout/Spinner";
+import {dashboardStyle} from '../styles/dashboardStyle'
+import {landingTheme} from "../styles/landingTheme";
 import {NavLink} from "react-router-dom";
+//Icon
+import { Icon } from "@iconify/react";
+import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
+import bitcoinIcon from '@iconify/icons-mdi/bitcoin';
+import financeIcon from '@iconify/icons-mdi/finance';
 //Redux
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { logout } from "../actions/auth";
-import {getCurrentProfile} from "../actions/profile";
+import { logout } from "../../actions/auth";
+import {getCurrentProfile} from "../../actions/profile";
 import Button from "@material-ui/core/Button";
 
-const Dashboard = ({logout, auth: {user}, profile :{profile,loading}, getCurrentProfile}) => {
+const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex,crypto}, getCurrentProfile}) => {
     useEffect(()=>{
         getCurrentProfile();
     },[getCurrentProfile]);
@@ -44,6 +49,9 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading}, getCurrent
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    console.log(user)
+    console.log(profile)
 
     return loading && profile === null ? (
         <Spinner/>
@@ -93,19 +101,34 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading}, getCurrent
                     </div>
                     <Divider />
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
+                        {stocks.map(stock => (
+                            <ListItem button key={stock._id}>
+                                <ListItemIcon>
+                                    <Icon icon={financeIcon} width="25px" height="25px" />
+                                </ListItemIcon>
+                                <ListItemText primary={stock.stockName} />
                             </ListItem>
                         ))}
                     </List>
                     <Divider />
                     <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
+                        {forex.map(forexItem => (
+                            <ListItem button key={forexItem._id}>
+                            <ListItemIcon>
+                                <Icon icon={cashUsdOutline} width="25px" height="25px" />
+                            </ListItemIcon>
+                                <ListItemText primary={forexItem.forexName} />
+                            </ListItem>
+                        ))}
+                    </List>
+                    <Divider />
+                    <List>
+                        {crypto.map(cryptoItem => (
+                            <ListItem button key={cryptoItem._id}>
+                                <ListItemIcon>
+                                <Icon icon={bitcoinIcon} width="25px" height="25px" />
+                                </ListItemIcon>
+                                <ListItemText primary={cryptoItem.cryptoName} />
                             </ListItem>
                         ))}
                     </List>
@@ -116,10 +139,10 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading}, getCurrent
                     })}
                 >
                     <div className={classes.drawerHeader} />
-                    <Typography title>
+                    <Typography title variant='h4' align='center' className={classes.text}>
                         Welcome {user && user.firstName}
                     </Typography>
-                    <Typography variant='h3'>
+                    <Typography variant='h5' align='center' className={classes.text}>
                         Take a look to this:
                     </Typography>
                 </main>

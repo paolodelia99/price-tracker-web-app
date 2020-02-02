@@ -7,6 +7,9 @@ import {
 
 const initialState = {
     profile: null,
+    stocks: [],
+    forex: [],
+    crypto: [],
     loading: true,
     error: {}
 };
@@ -20,6 +23,9 @@ export default function (state= initialState,action) {
             return{
                 ...state,
                 profile: payload,
+                stocks: payload.stocks,
+                forex: payload.forex,
+                crypto: payload.crypto,
                 loading: false
             };
         case PROFILE_ERROR:
@@ -33,7 +39,9 @@ export default function (state= initialState,action) {
             return {
                 ...state,
                 profile: null,
-                repos: [],
+                stocks: [],
+                forex: [],
+                crypto: [],
                 loading: false
             };
         default:

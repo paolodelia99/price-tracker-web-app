@@ -6,7 +6,9 @@ const Alert = ({ alerts }) =>
     alerts !== null &&
     alerts.length > 0 &&
     alerts.map(alert => (
-        <Alert key={alert.id} className={`alert alert-${alert.alertType}`} severity="error">{alert.msg}</Alert>
+        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+            {alert.msg}
+        </div>
     ));
 
 Alert.propTypes = {

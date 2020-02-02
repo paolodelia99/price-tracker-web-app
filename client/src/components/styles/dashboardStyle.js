@@ -59,4 +59,8 @@ export const dashboardStyle = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
+    text: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+    }
 }));
