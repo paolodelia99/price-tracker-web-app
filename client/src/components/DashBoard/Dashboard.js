@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { useTheme,ThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -30,10 +30,26 @@ import financeIcon from '@iconify/icons-mdi/finance';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { logout } from "../../actions/auth";
+import {getStock, takeOutStock} from "../../actions/stock";
+import {getForex,takeOutForex} from "../../actions/forex";
+import {getCrypto,takeOutCrypto} from "../../actions/crypto";
 import {getCurrentProfile} from "../../actions/profile";
 import Button from "@material-ui/core/Button";
+import SelectedItem from "./SelectedItem";
 
-const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex,crypto}, getCurrentProfile}) => {
+const Dashboard = (
+    {
+        logout,
+        auth: {user},
+        profile :{profile,loading,stocks,forex,crypto},
+        getCurrentProfile,
+        getStock,
+        getForex,
+        getCrypto,
+        takeOutStock,
+        takeOutForex,
+        takeOutCrypto
+    }) => {
     useEffect(()=>{
         getCurrentProfile();
     },[getCurrentProfile]);
@@ -41,6 +57,7 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
     const classes = dashboardStyle();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [isItemSelected, setItemSelected] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -48,6 +65,27 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const setCurrentStock = (stockName) => {
+        getStock(stockName);
+        takeOutCrypto()
+        takeOutForex()
+        setItemSelected(true);
+    };
+
+    const setCurrentForex = (forexExchange) => {
+        getForex(forexExchange);
+        takeOutCrypto();
+        takeOutStock();
+        setItemSelected(true)
+    };
+
+    const setCurrentCrypto = (cryptoName) => {
+        getCrypto(cryptoName);
+        takeOutForex();
+        takeOutStock();
+        setItemSelected(true)
     };
 
     console.log(user)
@@ -102,7 +140,11 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
                     <Divider />
                     <List>
                         {stocks.map(stock => (
-                            <ListItem button key={stock._id}>
+                            <ListItem
+                                button
+                                key={stock._id}
+                                onClick={ e => setCurrentStock(stock.stockName)}
+                            >
                                 <ListItemIcon>
                                     <Icon icon={financeIcon} width="25px" height="25px" />
                                 </ListItemIcon>
@@ -113,7 +155,11 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
                     <Divider />
                     <List>
                         {forex.map(forexItem => (
-                            <ListItem button key={forexItem._id}>
+                            <ListItem
+                                button
+                                key={forexItem._id}
+                                onClick={ e => setCurrentForex(forexItem.forexName)}
+                            >
                             <ListItemIcon>
                                 <Icon icon={cashUsdOutline} width="25px" height="25px" />
                             </ListItemIcon>
@@ -124,7 +170,11 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
                     <Divider />
                     <List>
                         {crypto.map(cryptoItem => (
-                            <ListItem button key={cryptoItem._id}>
+                            <ListItem
+                                button
+                                key={cryptoItem._id}
+                                onClick={ e => setCurrentCrypto(cryptoItem.cryptoName)}
+                            >
                                 <ListItemIcon>
                                 <Icon icon={bitcoinIcon} width="25px" height="25px" />
                                 </ListItemIcon>
@@ -145,6 +195,9 @@ const Dashboard = ({logout, auth: {user}, profile :{profile,loading,stocks,forex
                     <Typography variant='h5' align='center' className={classes.text}>
                         Take a look to this:
                     </Typography>
+                    <div>
+                        {isItemSelected ? <SelectedItem/> : null}
+                    </div>
                 </main>
             </div>
         </ThemeProvider>
@@ -155,7 +208,13 @@ Dashboard.propTypes = {
     logout: PropTypes.func.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
+    getStock: PropTypes.func.isRequired,
+    takeOutStock: PropTypes.func.isRequired,
+    getForex: PropTypes.func.isRequired,
+    takeOutForex: PropTypes.func.isRequired,
+    getCrypto: PropTypes.func.isRequired,
+    takeOutCrypto: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -163,4 +222,14 @@ const mapStateToProps = state => ({
     profile: state.profile
 })
 
-export default connect(mapStateToProps,{logout,getCurrentProfile})(Dashboard);
+export default connect(
+    mapStateToProps, {
+        logout,
+        getCurrentProfile,
+        getStock,
+        takeOutStock,
+        getForex,
+        takeOutForex,
+        getCrypto,
+        takeOutCrypto
+    })(Dashboard);

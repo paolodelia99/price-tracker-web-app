@@ -7,7 +7,7 @@ import ProductHero from "./ProductHero";
 import ProductValues from "./ProductValues";
 import ProductHowItWorks from "./ProductHowItWorks";
 import {landingTheme} from '../styles/landingTheme';
-import AppNavbar from '../AppNavbar'
+import AppNavbar from '../Layout/AppNavbar'
 
 const LandingPage = ({isAuthenticated}) => {
     if(isAuthenticated){

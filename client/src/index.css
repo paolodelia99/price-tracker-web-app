@@ -75,3 +75,10 @@ body{
   color: #333;
   border: #ccc solid 1px;
 }
+
+/*Selected Item*/
+.selected-item-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

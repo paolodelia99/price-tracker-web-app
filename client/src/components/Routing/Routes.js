@@ -2,9 +2,9 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Register from "../auth/Register";
 import Login from "../auth/Login";
-import Alert from "./Alert";
+import Alert from "../Layout/Alert";
 import PrivateRoute from "./PrivateRoute";
-import NotFound from "./NotFound";
+import NotFound from "../Layout/NotFound";
 import Dashboard from "../DashBoard/Dashboard";
 
 const Routes = () => {

@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { registerStyle } from '../styles/registerStyle';
 import { ThemeProvider } from '@material-ui/styles';
 import {landingTheme} from "../styles/landingTheme";
-import AppNavbar from '../AppNavbar';
+import AppNavbar from '../Layout/AppNavbar';
 
 const Register = ({setAlert, register, isAuthenticated}) => {
     const classes = registerStyle();
