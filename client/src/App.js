@@ -21,7 +21,6 @@ const App = () => {
       <Provider store={store}>
         <Router>
           <Fragment>
-            <AppNavbar/>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
               <Route component={Routes}/>

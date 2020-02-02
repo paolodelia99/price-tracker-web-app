@@ -19,7 +19,7 @@ function ProductHero(props) {
             <Typography color="inherit" align="center" className={classes.h5}>
                 The web app you're missing for your favorite financial instrument
             </Typography>
-            <Link to='/register'>
+            <Link to='/register' className='link'>
                 <Button
                     variant="contained"
                     color="primary"

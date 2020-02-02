@@ -7,6 +7,7 @@ import ProductHero from "./ProductHero";
 import ProductValues from "./ProductValues";
 import ProductHowItWorks from "./ProductHowItWorks";
 import {landingTheme} from '../styles/landingTheme';
+import AppNavbar from '../AppNavbar'
 
 const LandingPage = ({isAuthenticated}) => {
     if(isAuthenticated){
@@ -16,6 +17,7 @@ const LandingPage = ({isAuthenticated}) => {
     return (
         <ThemeProvider theme={landingTheme}>
             <section className="landing-page">
+                <AppNavbar/>
                 <ProductHero/>
                 <ProductValues/>
                 <ProductHowItWorks/>
