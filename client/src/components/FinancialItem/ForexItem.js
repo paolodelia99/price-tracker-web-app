@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -17,13 +17,22 @@ import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 import Spinner from "../Layout/Spinner";
 //Redux
-import {changeForexTimeFrame} from '../../actions/forex';
+import {updateForex} from '../../actions/forex';
 import {connect} from 'react-redux';
 
-const ForexItem = ({forex: {forex,loading},changeForexTimeFrame}) => {
+const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        updateForex(forex.forexName,timeFrame)
+    },[timeFrame]);
 
     const handleTimeFrameChange = e => {
         setTimeFrame(e.target.value)
@@ -31,7 +40,6 @@ const ForexItem = ({forex: {forex,loading},changeForexTimeFrame}) => {
 
     const handleChartChange = e => {
         setTypeOfChart(e.target.value);
-        changeForexTimeFrame(timeFrame)
     };
 
     const displayTheRightPlot = () => {
@@ -103,7 +111,7 @@ const ForexItem = ({forex: {forex,loading},changeForexTimeFrame}) => {
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Exchange Rate" secondary={forex.exchangeRate} />
+                    <ListItemText primary="Exchange Rate" secondary={exchangeRate} />
                 </ListItem>
             </div>
         </div>
@@ -112,7 +120,7 @@ const ForexItem = ({forex: {forex,loading},changeForexTimeFrame}) => {
 
 ForexItem.propTypes = {
     forex: PropTypes.object.isRequired,
-    changeForexTimeFrame: PropTypes.func.isRequired
+    updateForex: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -122,5 +130,5 @@ const mapStateToProps = state => ({
 export default
 connect(
     mapStateToProps,
-    {changeForexTimeFrame}
+    {updateForex}
 )(ForexItem);

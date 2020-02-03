@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useRef,useLayoutEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Spinner from '../Layout/Spinner'
@@ -11,10 +11,19 @@ import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
 
-const StockItem = ({stock: {loading, stock},changeStockTimeFrame,takeOutStock,updateStock}) =>{
+const StockItem = ({stock: {loading, stock},updateStock}) =>{
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        updateStock(stock.stockName,timeFrame)
+    },[timeFrame]);
 
     const handleTimeFrameChange = e => {
         setTimeFrame(e.target.value)
@@ -54,7 +63,7 @@ const StockItem = ({stock: {loading, stock},changeStockTimeFrame,takeOutStock,up
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
-                <FormControl className={classes.formControl} onClick={ e => updateStock(stock.stockName,timeFrame)}>
+                <FormControl className={classes.formControl} >
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame
                     </InputLabel>
@@ -62,7 +71,6 @@ const StockItem = ({stock: {loading, stock},changeStockTimeFrame,takeOutStock,up
                         labelId="timeframe-select-label"
                         id="timeframe-select"
                         value={timeFrame}
-                        onClose={e => console.log(timeFrame)}
                         onChange={handleTimeFrameChange}
                         displayEmpty
                         className={classes.selectEmpty}

@@ -2,10 +2,12 @@ import {
     GET_CRYPTO,
     TAKE_OUT_CRYPTO,
     UPDATE_CRYPTO,
+    SET_CRYPTO_EXCHANGE_RATE
 } from "../actions/types";
 
 const initialState = {
     crypto: null,
+    exchangeRate: null,
     loading: true
 };
 
@@ -19,6 +21,11 @@ export default function (state=initialState,action) {
                 ...state,
                 crypto: payload,
                 loading: false
+            };
+        case SET_CRYPTO_EXCHANGE_RATE:
+            return {
+                ...state,
+                exchangeRate: payload
             };
         case TAKE_OUT_CRYPTO:
             return {

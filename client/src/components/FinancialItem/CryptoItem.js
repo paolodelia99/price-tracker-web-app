@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Spinner from "../Layout/Spinner";
-import Plot from 'react-plotly.js';
 import {selectStyle} from "../styles/selectStyle";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,17 +11,26 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import {changeCryptoTimeFrame} from '../../actions/crypto';
+import {updateCrypto} from '../../actions/crypto';
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 
-const CryptoItem = ({crypto: {crypto,loading},changeCryptoTimeFrame}) => {
+const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        updateCrypto(crypto.cryptoName,timeFrame)
+    },[timeFrame]);
 
     const handleTimeFrameChange = e => {
         setTimeFrame(e.target.value)
@@ -30,7 +38,6 @@ const CryptoItem = ({crypto: {crypto,loading},changeCryptoTimeFrame}) => {
 
     const handleChartChange = e => {
         setTypeOfChart(e.target.value);
-        changeCryptoTimeFrame(timeFrame)
     };
 
     const displayTheRightPlot = () => {
@@ -102,7 +109,7 @@ const CryptoItem = ({crypto: {crypto,loading},changeCryptoTimeFrame}) => {
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Exchange Rate" secondary={crypto.exchangeRate} />
+                    <ListItemText primary="Exchange Rate" secondary={exchangeRate} />
                 </ListItem>
             </div>
         </div>
@@ -111,7 +118,7 @@ const CryptoItem = ({crypto: {crypto,loading},changeCryptoTimeFrame}) => {
 
 CryptoItem.protoTypes = {
     crypto: PropTypes.object.isRequired,
-    changeCryptoTimeFrame: PropTypes.func.isRequired
+    updateCrypto: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -121,5 +128,5 @@ const mapStateToProps = state => ({
 export default
 connect(
     mapStateToProps,
-    {changeCryptoTimeFrame}
+    {updateCrypto}
 )(CryptoItem);

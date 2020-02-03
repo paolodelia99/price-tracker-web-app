@@ -50,7 +50,7 @@ export const getStock = (stockName) => async dispatch => {
 
 //updateStock
 export const updateStock = (stockName,timeFrame) => async dispatch => {
-    dispatch(takeOutStock())
+    dispatch(takeOutStock());
 
     dispatch(changeStockTimeFrame(stockName,timeFrame))
 }
@@ -58,7 +58,7 @@ export const updateStock = (stockName,timeFrame) => async dispatch => {
 //change stock timeFrame
 export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
     try {
-        console.log(`timeFrame: ${timeFrame}`)
+        console.log(`inside action, timeFrame: ${timeFrame}`)
         const res = await axios.get(`/api/stock/${timeFrame}/${stockName}`);
 
         const data = res.data;

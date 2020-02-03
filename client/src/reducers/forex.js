@@ -1,11 +1,13 @@
 import {
     GET_FOREX,
     TAKE_OUT_FOREX,
-    UPDATE_FOREX
+    UPDATE_FOREX,
+    SET_FOREX_EXCHANGE_RATE
 } from "../actions/types";
 
 const initialState = {
     forex: null,
+    exchangeRate: null,
     loading: true
 };
 
@@ -20,6 +22,11 @@ export default function (state=initialState,action) {
                 forex: payload,
                 loading: false
             };
+        case SET_FOREX_EXCHANGE_RATE:
+            return {
+                ...state,
+                exchangeRate: payload
+            }
         case TAKE_OUT_FOREX:
             return {
                 ...state,

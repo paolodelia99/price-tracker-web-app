@@ -1,7 +1,8 @@
 import {
     GET_CRYPTO,
     TAKE_OUT_CRYPTO,
-    UPDATE_CRYPTO
+    UPDATE_CRYPTO,
+    SET_CRYPTO_EXCHANGE_RATE
 } from "./types";
 import axios from 'axios';
 import {setAlert} from "./alert";
@@ -13,10 +14,8 @@ export const getCrypto = (cryptoName) => async dispatch => {
     let market = res[1];
     try {
         const res = await axios.get(`/api/crypto/daily/${cryptoCurrency}/${market}`);
-        const exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
 
         const data = res.data;
-        const exchangeRateData = exchangeRateRes.data;
 
         //x-y for line chart
         let cryptoChartXValuesFunction = [];
@@ -24,7 +23,6 @@ export const getCrypto = (cryptoName) => async dispatch => {
         let cryptoChartOpenValuesFunction = [];
         let cryptoChartHighValuesFunction = [];
         let cryptoChartLowValuesFunction = [];
-
 
         for (let key in data['Time Series (Digital Currency Daily)']) {
             cryptoChartXValuesFunction.push(key);
@@ -34,17 +32,16 @@ export const getCrypto = (cryptoName) => async dispatch => {
             cryptoChartLowValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`3a. low (${market})`])
         }
 
-        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-
         const cryptoData = {
             cryptoName: cryptoName,
-            exchangeRate: exchangeRate,
             chartXValues: cryptoChartXValuesFunction,
             chartCloseValues: cryptoChartCloseValuesFunction,
             chartOpenValues: cryptoChartOpenValuesFunction,
             chartHighValues: cryptoChartHighValuesFunction,
             chartLowValues: cryptoChartLowValuesFunction
-        }
+        };
+
+        dispatch(setCryptoExchangeRate(cryptoCurrency,market));
 
         dispatch({
             type: GET_CRYPTO,
@@ -54,6 +51,29 @@ export const getCrypto = (cryptoName) => async dispatch => {
         dispatch(setAlert('Crypto not found','alert-danger'))
     }
 };
+
+const setCryptoExchangeRate = (cryptoCurrency,market) => async dispatch => {
+    try {
+        const exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
+
+        const exchangeRateData = exchangeRateRes.data;
+
+        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+
+        dispatch({
+            type: SET_CRYPTO_EXCHANGE_RATE,
+            payload: exchangeRate
+        })
+    }catch (err) {
+        dispatch(setAlert('Exchange rate not found','alert-danger'))
+    }
+}
+
+export const updateCrypto = (cryptoName, timeFrame) => dispatch => {
+    dispatch(takeOutCrypto());
+
+    dispatch(changeCryptoTimeFrame(cryptoName,timeFrame))
+}
 
 //Change Crypto timeFrame
 export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch => {

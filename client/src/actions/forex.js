@@ -1,7 +1,8 @@
 import {
     GET_FOREX,
     TAKE_OUT_FOREX,
-    UPDATE_FOREX
+    UPDATE_FOREX,
+    SET_FOREX_EXCHANGE_RATE
 } from "./types";
 import axios from 'axios';
 import {setAlert} from "./alert";
@@ -12,11 +13,9 @@ export const getForex = (forexName) => async dispatch => {
     let formForexName = res[0];
     let toForexName = res[1];
     try {
-        const res = await axios.get(`/api/forex/daily/${formForexName}/${toForexName}`)
-        const exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
+        const res = await axios.get(`/api/forex/daily/${formForexName}/${toForexName}`);
 
         const data = res.data;
-        const exchangeRateData = exchangeRateRes.data;
 
         let forexChartXValuesFunction = [];
         let forexChartCloseValuesFunction = [];
@@ -32,17 +31,16 @@ export const getForex = (forexName) => async dispatch => {
             forexChartLowValuesFunction.push(data['Time Series FX (Daily)'][key]['3. low']);
         }
 
-        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
-
         const forexData = {
             forexName: forexName,
-            exchangeRate: exchangeRate,
             chartXValues: forexChartXValuesFunction,
             chartCloseValues: forexChartCloseValuesFunction,
             chartOpenValues: forexChartOpenValuesFunction,
             chartHighValues: forexChartHighValuesFunction,
             chartLowValues: forexChartLowValuesFunction
         }
+
+        dispatch(setForexExchangeRate(formForexName,toForexName));
 
         dispatch({
             type: GET_FOREX,
@@ -52,6 +50,29 @@ export const getForex = (forexName) => async dispatch => {
         dispatch(setAlert('Forex not found','alert-danger'))
     }
 };
+
+const setForexExchangeRate = (formForexName,toForexName) => async dispatch => {
+    try {
+        const exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
+
+        const exchangeRateData = exchangeRateRes.data;
+
+        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+
+        dispatch({
+            type: SET_FOREX_EXCHANGE_RATE,
+            payload: exchangeRate
+        })
+    }catch (err) {
+        dispatch(setAlert('Exchange not found','alert-danger'))
+    }
+}
+
+export const updateForex = (forexName, timeFrame) => dispatch => {
+    dispatch(takeOutForex());
+
+    dispatch(changeForexTimeFrame(forexName,timeFrame))
+}
 
 //change forex timeFrame
 export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
