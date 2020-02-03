@@ -12,13 +12,14 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import {changeCryptoTimeFrame} from '../../actions/crypto';
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 
-const CryptoItem = ({crypto: {crypto,loading}}) => {
+const CryptoItem = ({crypto: {crypto,loading},changeCryptoTimeFrame}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -28,7 +29,8 @@ const CryptoItem = ({crypto: {crypto,loading}}) => {
     };
 
     const handleChartChange = e => {
-        setTypeOfChart(e.target.value)
+        setTypeOfChart(e.target.value);
+        changeCryptoTimeFrame(timeFrame)
     };
 
     const displayTheRightPlot = () => {
@@ -108,7 +110,8 @@ const CryptoItem = ({crypto: {crypto,loading}}) => {
 };
 
 CryptoItem.protoTypes = {
-    crypto: PropTypes.object.isRequired
+    crypto: PropTypes.object.isRequired,
+    changeCryptoTimeFrame: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -117,5 +120,6 @@ const mapStateToProps = state => ({
 
 export default
 connect(
-    mapStateToProps
+    mapStateToProps,
+    {changeCryptoTimeFrame}
 )(CryptoItem);

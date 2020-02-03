@@ -42,7 +42,7 @@ const CandleStickChart = ({financialItem,financialItemName}) => {
 
 CandleStickChart.propTypes = {
     financialItem: PropTypes.object.isRequired,
-    financialItemName: PropTypes.string.isRequired
+    financialItemName: PropTypes.string.isRequired,
 }
 
 export default CandleStickChart;

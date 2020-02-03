@@ -1,6 +1,7 @@
 import {
     GET_CRYPTO,
-    TAKE_OUT_CRYPTO
+    TAKE_OUT_CRYPTO,
+    UPDATE_CRYPTO
 } from "./types";
 import axios from 'axios';
 import {setAlert} from "./alert";
@@ -51,6 +52,65 @@ export const getCrypto = (cryptoName) => async dispatch => {
         })
     }catch (err) {
         dispatch(setAlert('Crypto not found','alert-danger'))
+    }
+};
+
+//Change Crypto timeFrame
+export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch => {
+    let res = cryptoName.split('/');
+    let cryptoCurrency = res[0];
+    let market = res[1];
+    try {
+        const res = await axios.get(`/api/crypto/${timeFrame}/${cryptoCurrency}/${market}`);
+
+        const data = res.data;
+
+        //x-y for line chart
+        let cryptoChartXValuesFunction = [];
+        let cryptoChartCloseValuesFunction = [];
+        let cryptoChartOpenValuesFunction = [];
+        let cryptoChartHighValuesFunction = [];
+        let cryptoChartLowValuesFunction = [];
+
+        let header = getHeader(timeFrame);
+
+        for (let key in data[header]) {
+            cryptoChartXValuesFunction.push(key);
+            cryptoChartCloseValuesFunction.push(data[header][key][`4a. close (${market})`]);
+            cryptoChartOpenValuesFunction.push(data[header][key][`1a. open (${market})`])
+            cryptoChartHighValuesFunction.push(data[header][key][`2a. high (${market})`])
+            cryptoChartLowValuesFunction.push(data[header][key][`3a. low (${market})`])
+        }
+
+        const cryptoData = {
+            cryptoName: cryptoName,
+            chartXValues: cryptoChartXValuesFunction,
+            chartCloseValues: cryptoChartCloseValuesFunction,
+            chartOpenValues: cryptoChartOpenValuesFunction,
+            chartHighValues: cryptoChartHighValuesFunction,
+            chartLowValues: cryptoChartLowValuesFunction
+        }
+
+        dispatch({
+            type: UPDATE_CRYPTO,
+            payload: cryptoData
+        })
+    }catch (err) {
+        dispatch(setAlert('Error','alert-danger'))
+    }
+
+};
+
+const getHeader = (timeFrame) =>{
+    switch (timeFrame) {
+        case 'daily':
+            return 'Time Series (Digital Currency Daily)';
+        case 'weekly':
+            return 'Time Series (Digital Currency Weekly)';
+        case 'monthly':
+            return 'Time Series (Digital Currency Monthly)';
+        default:
+            return 'Time Series (Digital Currency Daily)';
     }
 };
 

@@ -4,8 +4,6 @@ const request = require('request');
 const config = require('config');
 const apiKey = config.get('ALPHA_API_KEY');
 
-//fixme: unica routes con un switch con tutti i timeFrame
-
 // @route    GET api/crypto/exchange-rate/:from_currency/:to_currency
 // @desc     get exchange rate
 // @access   Public
@@ -22,12 +20,29 @@ router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
     }
 });
 
-// @route    GET api/crypto/daily/:from_currency/:to_currency
-// @desc     get daily data
+// @route    GET api/crypto/:time_frame/:from_currency/:to_currency
+// @desc     get data according to the requested timeframe
 // @access   Public
-router.get('/daily/:crypto_simbol/:market',async (req,res)=>{
+router.get('/:time_frame/:crypto_simbol/:market',async (req,res)=>{
+
+    let timeFrame;
+
+    switch (req.params.time_frame) {
+        case 'daily':
+            timeFrame = 'DIGITAL_CURRENCY_DAILY';
+            break;
+        case 'weekly':
+            timeFrame = 'DIGITAL_CURRENCY_WEEKLY';
+            break;
+        case 'monthly':
+            timeFrame = 'DIGITAL_CURRENCY_MONTHLY';
+            break;
+        default:
+            timeFrame = 'DIGITAL_CURRENCY_DAILY';
+    }
+
     try{
-        await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
+        await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
 
             const content = JSON.parse(body);
 
@@ -39,38 +54,5 @@ router.get('/daily/:crypto_simbol/:market',async (req,res)=>{
     }
 });
 
-// @route    GET api/crypto/weekly/:from_currency/:to_currency
-// @desc     get weekly data
-// @access   Public
-router.get('/weekly/:crypto_simbol/:market',async (req,res)=>{
-    try{
-        await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
-
-            const content = JSON.parse(body);
-
-            res.json(content)
-        })
-    }catch (e) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
-// @route    GET api/crypto/monthly/:from_currency/:to_currency
-// @desc     get monthly data
-// @access   Public
-router.get('/monthly/:crypto_simbol/:market',async (req,res)=>{
-    try{
-        await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
-
-            const content = JSON.parse(body);
-
-            res.json(content)
-        })
-    }catch (e) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
 
 module.exports = router;

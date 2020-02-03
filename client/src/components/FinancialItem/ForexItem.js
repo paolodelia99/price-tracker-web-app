@@ -1,24 +1,26 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Spinner from "../Layout/Spinner";
-import Plot from 'react-plotly.js';
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import {selectStyle} from "../styles/selectStyle";
-//Icon
-import { Icon } from "@iconify/react";
-import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
+import {selectStyle} from "../styles/selectStyle";
+//Icon
+import { Icon } from "@iconify/react";
+import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
+// Other Components
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
+import Spinner from "../Layout/Spinner";
+//Redux
+import {changeForexTimeFrame} from '../../actions/forex';
+import {connect} from 'react-redux';
 
-const ForexItem = ({forex: {forex,loading}}) => {
+const ForexItem = ({forex: {forex,loading},changeForexTimeFrame}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -28,7 +30,8 @@ const ForexItem = ({forex: {forex,loading}}) => {
     };
 
     const handleChartChange = e => {
-        setTypeOfChart(e.target.value)
+        setTypeOfChart(e.target.value);
+        changeForexTimeFrame(timeFrame)
     };
 
     const displayTheRightPlot = () => {
@@ -108,7 +111,8 @@ const ForexItem = ({forex: {forex,loading}}) => {
 };
 
 ForexItem.propTypes = {
-    forex: PropTypes.object.isRequired
+    forex: PropTypes.object.isRequired,
+    changeForexTimeFrame: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -117,5 +121,6 @@ const mapStateToProps = state => ({
 
 export default
 connect(
-    mapStateToProps
+    mapStateToProps,
+    {changeForexTimeFrame}
 )(ForexItem);

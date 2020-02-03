@@ -1,6 +1,7 @@
 import {
     GET_CRYPTO,
     TAKE_OUT_CRYPTO,
+    UPDATE_CRYPTO,
 } from "../actions/types";
 
 const initialState = {
@@ -12,12 +13,13 @@ export default function (state=initialState,action) {
     const {type, payload} = action;
 
     switch (type) {
+        case UPDATE_CRYPTO:
         case GET_CRYPTO:
             return{
                 ...state,
                 crypto: payload,
                 loading: false
-            }
+            };
         case TAKE_OUT_CRYPTO:
             return {
                 ...state,

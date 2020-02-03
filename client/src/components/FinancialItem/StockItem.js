@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Spinner from '../Layout/Spinner'
-import Plot from 'react-plotly.js';
 import {selectStyle} from "../styles/selectStyle";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -10,8 +9,9 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
+import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
 
-const StockItem = ({stock: {loading, stock}}) =>{
+const StockItem = ({stock: {loading, stock},changeStockTimeFrame,takeOutStock,updateStock}) =>{
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -21,7 +21,7 @@ const StockItem = ({stock: {loading, stock}}) =>{
     };
 
     const handleChartChange = e => {
-        setTypeOfChart(e.target.value)
+        setTypeOfChart(e.target.value);
     };
 
     const displayTheRightPlot = () => {
@@ -46,8 +46,6 @@ const StockItem = ({stock: {loading, stock}}) =>{
         }
     };
 
-    //fixme: implement https://plot.ly/javascript/candlestick-charts/
-
     return (loading && stock === null) ? (
         <Spinner/>
     ) : (
@@ -56,7 +54,7 @@ const StockItem = ({stock: {loading, stock}}) =>{
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} onClick={ e => updateStock(stock.stockName,timeFrame)}>
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame
                     </InputLabel>
@@ -64,6 +62,7 @@ const StockItem = ({stock: {loading, stock}}) =>{
                         labelId="timeframe-select-label"
                         id="timeframe-select"
                         value={timeFrame}
+                        onClose={e => console.log(timeFrame)}
                         onChange={handleTimeFrameChange}
                         displayEmpty
                         className={classes.selectEmpty}
@@ -97,6 +96,9 @@ const StockItem = ({stock: {loading, stock}}) =>{
 
 StockItem.propTypes = {
     stock: PropTypes.object.isRequired,
+    changeStockTimeFrame: PropTypes.func.isRequired,
+    takeOutStock: PropTypes.func.isRequired,
+    updateStock: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -104,4 +106,7 @@ const mapStateToProps = state => ({
 })
 
 export default
-connect(mapStateToProps)(StockItem);
+connect(
+    mapStateToProps,
+    {changeStockTimeFrame,takeOutStock,updateStock}
+)(StockItem);

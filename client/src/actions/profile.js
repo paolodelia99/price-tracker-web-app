@@ -1,11 +1,15 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-
+import {takeOutForex} from "./forex";
+import {takeOutStock} from "./stock";
+import {takeOutCrypto} from "./crypto";
 import {
     GET_PROFILE,
     PROFILE_ERROR,
     UPDATE_PROFILE,
-    CLEAR_PROFILE, SET_SELECTED_ITEM, REMOVE_SELECTED_ITEM,
+    CLEAR_PROFILE,
+    SET_SELECTED_ITEM,
+    REMOVE_SELECTED_ITEM,
 } from './types';
 
 // Get current users profile
@@ -30,6 +34,12 @@ export const setSelectedItem = (itemType) => dispatch => {
         type: SET_SELECTED_ITEM,
         payload: itemType
     })
+};
+
+export const takeOutEveryThing = () => dispatch => {
+    dispatch(takeOutStock());
+    dispatch(takeOutForex());
+    dispatch(takeOutCrypto());
 };
 
 export const removeSelectedItem = () => dispatch => {

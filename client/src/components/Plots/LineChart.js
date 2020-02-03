@@ -25,7 +25,7 @@ const LineChart = ({financialItem,financialItemName,color}) => {
 LineChart.propTypes = {
     financialItem: PropTypes.object.isRequired,
     financialItemName: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired
+    color: PropTypes.string.isRequired,
 }
 
 export default LineChart;

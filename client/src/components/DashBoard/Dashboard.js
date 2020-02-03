@@ -15,12 +15,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Spinner from "../Layout/Spinner";
 import {dashboardStyle} from '../styles/dashboardStyle'
 import {landingTheme} from "../styles/landingTheme";
 import {NavLink} from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import SelectedItem from "./SelectedItem";
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
@@ -30,13 +30,12 @@ import financeIcon from '@iconify/icons-mdi/finance';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { logout } from "../../actions/auth";
-import {getStock, takeOutStock} from "../../actions/stock";
-import {getForex,takeOutForex} from "../../actions/forex";
-import {getCrypto,takeOutCrypto} from "../../actions/crypto";
+import {getStock} from "../../actions/stock";
+import {getForex} from "../../actions/forex";
+import {getCrypto} from "../../actions/crypto";
 import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
-import Button from "@material-ui/core/Button";
-import SelectedItem from "./SelectedItem";
+import {takeOutEveryThing} from "../../actions/profile";
 
 const Dashboard = (
     {
@@ -47,10 +46,8 @@ const Dashboard = (
         getStock,
         getForex,
         getCrypto,
-        takeOutStock,
-        takeOutForex,
-        takeOutCrypto,
         setSelectedItem,
+        takeOutEveryThing,
         removeSelectedItem
     }) => {
     useEffect(()=>{
@@ -71,31 +68,28 @@ const Dashboard = (
     };
 
     const setCurrentStock = (stockName) => {
+        takeOutEveryThing();
         getStock(stockName);
         setSelectedItem('stock');
-        takeOutCrypto();
-        takeOutForex();
         setItemSelected(true);
     };
 
     const setCurrentForex = (forexExchange) => {
+        takeOutEveryThing();
         getForex(forexExchange);
         setSelectedItem('forex');
-        takeOutCrypto();
-        takeOutStock();
         setItemSelected(true)
     };
 
     const setCurrentCrypto = (cryptoName) => {
+        takeOutEveryThing();
         getCrypto(cryptoName);
         setSelectedItem('crypto');
-        takeOutForex();
-        takeOutStock();
         setItemSelected(true)
     };
 
-    console.log(user)
-    console.log(profile)
+    console.log(user);
+    console.log(profile);
 
     return loading && profile === null ? (
         <Spinner/>
@@ -208,7 +202,7 @@ const Dashboard = (
             </div>
         </ThemeProvider>
     );
-}
+};
 
 Dashboard.propTypes = {
     logout: PropTypes.func.isRequired,
@@ -216,13 +210,11 @@ Dashboard.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     getStock: PropTypes.func.isRequired,
-    takeOutStock: PropTypes.func.isRequired,
     getForex: PropTypes.func.isRequired,
-    takeOutForex: PropTypes.func.isRequired,
     getCrypto: PropTypes.func.isRequired,
-    takeOutCrypto: PropTypes.func.isRequired,
     removeSelectedItem: PropTypes.func.isRequired,
-    setSelectedItem: PropTypes.func.isRequired
+    setSelectedItem: PropTypes.func.isRequired,
+    takeOutEveryThing: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -235,11 +227,9 @@ export default connect(
         logout,
         getCurrentProfile,
         getStock,
-        takeOutStock,
         getForex,
-        takeOutForex,
         getCrypto,
-        takeOutCrypto,
         setSelectedItem,
-        removeSelectedItem
+        removeSelectedItem,
+        takeOutEveryThing
     })(Dashboard);
