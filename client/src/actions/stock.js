@@ -13,17 +13,29 @@ export const getStock = (stockName) => async dispatch => {
         const data = res.data;
 
         let stockChartXValuesFunction = [];
-        let stockChartYValuesFunction = [];
+        let stockChartCloseValuesFunction = [];
+        let stockChartOpenValuesFunction = [];
+        let stockChartHighValuesFunction = [];
+        let stockChartLowValuesFunction = [];
+        let stockChartVolumeValuesFunction = [];
 
         for (let key in data['Time Series (Daily)']) {
             stockChartXValuesFunction.push(key);
-            stockChartYValuesFunction.push(data['Time Series (Daily)'][key]['4. close']);
+            stockChartCloseValuesFunction.push(data['Time Series (Daily)'][key]['4. close']);
+            stockChartOpenValuesFunction.push(data['Time Series (Daily)'][key]['1. open']);
+            stockChartHighValuesFunction.push(data['Time Series (Daily)'][key]['2. high']);
+            stockChartLowValuesFunction.push(data['Time Series (Daily)'][key]['3. low']);
+            stockChartVolumeValuesFunction.push(data['Time Series (Daily)'][key]['5. volume'])
         }
 
         const stockData = {
             stockName: stockName,
-            stockChartXValues: stockChartXValuesFunction,
-            stockChartYValues: stockChartYValuesFunction
+            chartXValues: stockChartXValuesFunction,
+            chartCloseValues: stockChartCloseValuesFunction,
+            chartOpenValues: stockChartOpenValuesFunction,
+            chartHighValues: stockChartHighValuesFunction,
+            chartLowValues: stockChartLowValuesFunction,
+            chartVolumeValues: stockChartVolumeValuesFunction
         }
 
         dispatch({

@@ -12,21 +12,35 @@ export const getForex = (forexName) => async dispatch => {
     let toForexName = res[1];
     try {
         const res = await axios.get(`/api/forex/daily/${formForexName}/${toForexName}`)
+        const exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
 
         const data = res.data;
+        const exchangeRateData = exchangeRateRes.data;
 
         let forexChartXValuesFunction = [];
-        let forexChartYValuesFunction = [];
+        let forexChartCloseValuesFunction = [];
+        let forexChartOpenValuesFunction = [];
+        let forexChartHighValuesFunction = [];
+        let forexChartLowValuesFunction = [];
 
         for (let key in data['Time Series FX (Daily)']) {
             forexChartXValuesFunction.push(key);
-            forexChartYValuesFunction.push(data['Time Series FX (Daily)'][key]['4. close']);
+            forexChartCloseValuesFunction.push(data['Time Series FX (Daily)'][key]['4. close']);
+            forexChartOpenValuesFunction.push(data['Time Series FX (Daily)'][key]['1. open']);
+            forexChartHighValuesFunction.push(data['Time Series FX (Daily)'][key]['2. high']);
+            forexChartLowValuesFunction.push(data['Time Series FX (Daily)'][key]['3. low']);
         }
+
+        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
 
         const forexData = {
             forexName: forexName,
-            forexChartXValues: forexChartXValuesFunction,
-            forexChartYValues: forexChartYValuesFunction
+            exchangeRate: exchangeRate,
+            chartXValues: forexChartXValuesFunction,
+            chartCloseValues: forexChartCloseValuesFunction,
+            chartOpenValues: forexChartOpenValuesFunction,
+            chartHighValues: forexChartHighValuesFunction,
+            chartLowValues: forexChartLowValuesFunction
         }
 
         dispatch({

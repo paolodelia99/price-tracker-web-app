@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import StockItem from '../FinancialItem/StockItem';
 import ForexItem from "../FinancialItem/ForexItem";
 import CryptoItem from "../FinancialItem/CryptoItem";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from "../Layout/Spinner";
-
 
 const SelectedItem =
     ({

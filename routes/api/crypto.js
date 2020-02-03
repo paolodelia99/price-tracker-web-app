@@ -12,10 +12,6 @@ const apiKey = config.get('ALPHA_API_KEY');
 router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${req.params.from_currency}&to_currency=${req.params.to_currency}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
-
             const content = JSON.parse(body);
 
             res.json(content)
@@ -32,9 +28,6 @@ router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
 router.get('/daily/:crypto_simbol/:market',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 
@@ -52,9 +45,6 @@ router.get('/daily/:crypto_simbol/:market',async (req,res)=>{
 router.get('/weekly/:crypto_simbol/:market',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 
@@ -72,9 +62,6 @@ router.get('/weekly/:crypto_simbol/:market',async (req,res)=>{
 router.get('/monthly/:crypto_simbol/:market',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 

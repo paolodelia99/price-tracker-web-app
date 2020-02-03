@@ -12,21 +12,37 @@ export const getCrypto = (cryptoName) => async dispatch => {
     let market = res[1];
     try {
         const res = await axios.get(`/api/crypto/daily/${cryptoCurrency}/${market}`);
+        const exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
 
         const data = res.data;
+        const exchangeRateData = exchangeRateRes.data;
 
+        //x-y for line chart
         let cryptoChartXValuesFunction = [];
-        let cryptoChartYValuesFunction = [];
+        let cryptoChartCloseValuesFunction = [];
+        let cryptoChartOpenValuesFunction = [];
+        let cryptoChartHighValuesFunction = [];
+        let cryptoChartLowValuesFunction = [];
+
 
         for (let key in data['Time Series (Digital Currency Daily)']) {
             cryptoChartXValuesFunction.push(key);
-            cryptoChartYValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`4a. close (${market})`]);
+            cryptoChartCloseValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`4a. close (${market})`]);
+            cryptoChartOpenValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`1a. open (${market})`])
+            cryptoChartHighValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`2a. high (${market})`])
+            cryptoChartLowValuesFunction.push(data['Time Series (Digital Currency Daily)'][key][`3a. low (${market})`])
         }
+
+        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
 
         const cryptoData = {
             cryptoName: cryptoName,
-            cryptoChartXValues: cryptoChartXValuesFunction,
-            cryptoChartYValues: cryptoChartYValuesFunction
+            exchangeRate: exchangeRate,
+            chartXValues: cryptoChartXValuesFunction,
+            chartCloseValues: cryptoChartCloseValuesFunction,
+            chartOpenValues: cryptoChartOpenValuesFunction,
+            chartHighValues: cryptoChartHighValuesFunction,
+            chartLowValues: cryptoChartLowValuesFunction
         }
 
         dispatch({

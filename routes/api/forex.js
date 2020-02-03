@@ -11,10 +11,8 @@ const apiKey = config.get('ALPHA_API_KEY');
 // @access   Public
 router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
     try{
-        await request(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${req.params.from_currency}&to_currency=${req.params.to_currency}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
+        await request(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${req.params.from_currency}&to_currency=${req.params.to_currency}&apikey=${apiKey}`,
+            (err,response, body) => {
 
             const content = JSON.parse(body);
 
@@ -32,9 +30,6 @@ router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
 router.get('/intraday/:from_currency/:to_currency',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=${req.params.from_currency}&outputsize=compact&to_symbol=${req.params.to_currency}&interval=${req.body.interval}&apikey=${apiKey}`, (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body)
 
             const content = JSON.parse(body);
 
@@ -53,9 +48,6 @@ router.get('/daily/:fromCurrency/:toCurrency',async (req,res)=>{
     try{
         await request(`https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${req.params.fromCurrency}&outputsize=compact&to_symbol=${req.params.toCurrency}&apikey=${apiKey}`,
             async (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body);
 
             const content = JSON.parse(body);
 
@@ -75,9 +67,6 @@ router.get('/weekly/:fromCurrency/:toCurrency',async (req,res)=>{
         await request(
             `https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=${req.params.fromCurrency}&outputsize=compact&to_symbol=${req.params.toCurrency}&apikey=${apiKey}`,
             (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body);
 
             const content = JSON.parse(body);
 
@@ -97,9 +86,6 @@ router.get('/monthly/:fromCurrency/:toCurrency',async (req,res)=>{
         await request(
             `https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=${req.params.fromCurrency}&outputsize=compact&to_symbol=${req.params.toCurrency}&apikey=${apiKey}`,
             (err,response, body) => {
-            console.log('error: ',err)
-            console.log('statusCode:',response && response.statusCode);
-            console.log('body:', body);
 
             const content = JSON.parse(body);
 

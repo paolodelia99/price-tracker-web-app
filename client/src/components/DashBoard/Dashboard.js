@@ -195,7 +195,7 @@ const Dashboard = (
                     })}
                 >
                     <div className={classes.drawerHeader} />
-                    <Typography title variant='h4' align='center' className={classes.text}>
+                    <Typography variant='h4' align='center' className={classes.text}>
                         Welcome {user && user.firstName}
                     </Typography>
                     <Typography variant='h5' align='center' className={classes.text}>

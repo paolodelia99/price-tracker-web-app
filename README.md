@@ -18,7 +18,7 @@ Tools that I've used to build this app:
 - [Redux](https://redux.js.org/) - for linking the back-end with the front-end
 - [Material-UI](https://material-ui.com/) - as a React UI framework (also to make more similar to the real Google Keep)
 - [Alpha Vantage](https://www.alphavantage.co/) - for getting the stock, forex and crypto data
-- [Plot.ly](https://plot.ly/) - for display the charts
+- [Plot.ly](https://plot.ly/) - for displaying the charts
 
 ## Quick Start: how to install it
 
