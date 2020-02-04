@@ -14,6 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import SearchIcon from '@material-ui/icons/Search';
 import ListItemText from '@material-ui/core/ListItemText';
 import Spinner from "../Layout/Spinner";
 import {dashboardStyle} from '../styles/dashboardStyle'
@@ -21,6 +22,8 @@ import {landingTheme} from "../styles/landingTheme";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import SelectedItem from "./SelectedItem";
+import InitialPage from "./InitialPage";
+import {InitialDashboardButton} from '../Layout/initialDashboardButton'
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
@@ -36,6 +39,7 @@ import {getCrypto} from "../../actions/crypto";
 import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
 import {takeOutEveryThing} from "../../actions/profile";
+import InputBase from "@material-ui/core/InputBase";
 
 const Dashboard = (
     {
@@ -56,7 +60,9 @@ const Dashboard = (
 
     const classes = dashboardStyle();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [openSearchBar,setSearchBarOpen] = useState(false);
+    const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -66,6 +72,21 @@ const Dashboard = (
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const removeItem = () => {
+        removeSelectedItem();
+        closeSearchPage();
+        setItemSelected(false);
+    };
+
+    const openSearchPage = () => {
+        console.log('open search Page');
+        setSearchBarOpen(true);
+    };
+
+    const closeSearchPage = () =>{
+        setSearchBarOpen(false)
+    }
 
     const setCurrentStock = (stockName) => {
         takeOutEveryThing();
@@ -113,9 +134,32 @@ const Dashboard = (
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap className={classes.title}>
-                            Price Tracker
+                        <Typography variant="h6" noWrap className={classes.title} >
+                            <InitialDashboardButton
+                                variant="contained"
+                                disableRipple
+                                className={classes.margin}
+                                onClick={removeItem}
+                            >
+                                Price Tracker
+                            </InitialDashboardButton>
                         </Typography>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                value={keyWord}
+                                onClick={openSearchPage}
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                        <div className={classes.grow} />
                         <Fragment>
                             <NavLink to='#!' onClick={logout} className='link'>
                                 <Button color='inherit' >Logout</Button>
@@ -138,6 +182,9 @@ const Dashboard = (
                         </IconButton>
                     </div>
                     <Divider />
+                    <ListItem>
+                        <ListItemText primary='Stocks'/>
+                    </ListItem>
                     <List>
                         {stocks.map(stock => (
                             <ListItem
@@ -153,6 +200,9 @@ const Dashboard = (
                         ))}
                     </List>
                     <Divider />
+                    <ListItem>
+                        <ListItemText primary='Forex'/>
+                    </ListItem>
                     <List>
                         {forex.map(forexItem => (
                             <ListItem
@@ -168,6 +218,9 @@ const Dashboard = (
                         ))}
                     </List>
                     <Divider />
+                    <ListItem>
+                        <ListItemText primary='Crypto'/>
+                    </ListItem>
                     <List>
                         {crypto.map(cryptoItem => (
                             <ListItem
@@ -189,14 +242,8 @@ const Dashboard = (
                     })}
                 >
                     <div className={classes.drawerHeader} />
-                    <Typography variant='h4' align='center' className={classes.text}>
-                        Welcome {user && user.firstName}
-                    </Typography>
-                    <Typography variant='h5' align='center' className={classes.text}>
-                        Take a look to this:
-                    </Typography>
                     <div>
-                        {isItemSelected ? <SelectedItem/> : null}
+                        {isItemSelected ? <SelectedItem/> : <InitialPage/>}
                     </div>
                 </main>
             </div>
@@ -220,7 +267,7 @@ Dashboard.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth,
     profile: state.profile
-})
+});
 
 export default connect(
     mapStateToProps, {
