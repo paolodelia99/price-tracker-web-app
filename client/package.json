@@ -14,6 +14,7 @@
     "clsx": "^1.0.4",
     "plotly.js": "^1.52.1",
     "prop-types": "^15.7.2",
+    "random-words": "^1.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-plotly.js": "^2.4.0",

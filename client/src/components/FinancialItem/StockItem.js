@@ -10,8 +10,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
+import Button from "@material-ui/core/Button";
 
-const StockItem = ({stock: {loading, stock},updateStock}) =>{
+const StockItem = ({stock: {loading, stock},updateStock},isNew) =>{
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -63,6 +64,12 @@ const StockItem = ({stock: {loading, stock},updateStock}) =>{
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
+                {isNew ? (
+                    <Button
+                        variant='outlined'
+                        color='secondary'
+                    >Add To Stocks</Button>
+                ) : null}
                 <FormControl className={classes.formControl} >
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame
@@ -106,7 +113,8 @@ StockItem.propTypes = {
     stock: PropTypes.object.isRequired,
     changeStockTimeFrame: PropTypes.func.isRequired,
     takeOutStock: PropTypes.func.isRequired,
-    updateStock: PropTypes.func.isRequired
+    updateStock: PropTypes.func.isRequired,
+    isNew: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

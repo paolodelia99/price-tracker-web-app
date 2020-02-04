@@ -9,7 +9,7 @@ import {setAlert} from "./alert";
 //default timeFrame daily-adjusted
 export const getStock = (stockName) => async dispatch => {
     try {
-        const res = await axios.get(`/api/stock/daily-adjusted/${stockName}`);
+        const res = await axios.get(`/api/stock/getStock/daily-adjusted/${stockName}`);
 
         const data = res.data;
 
@@ -59,9 +59,12 @@ export const updateStock = (stockName,timeFrame) => async dispatch => {
 export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
     try {
         console.log(`inside action, timeFrame: ${timeFrame}`)
-        const res = await axios.get(`/api/stock/${timeFrame}/${stockName}`);
+        const res = await axios.get(`/api/stock/getStock/${timeFrame}/${stockName}`);
 
         const data = res.data;
+        if(data['Note'])
+            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+
         console.log(data)
 
         let stockChartXValuesFunction = [];
@@ -98,7 +101,7 @@ export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
             payload: stockData
         })
     }catch (err) {
-        dispatch(setAlert('Stock not found','alert-danger'))
+        dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
     }
 };
 

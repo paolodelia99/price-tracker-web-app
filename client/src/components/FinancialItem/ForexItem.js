@@ -20,7 +20,7 @@ import Spinner from "../Layout/Spinner";
 import {updateForex} from '../../actions/forex';
 import {connect} from 'react-redux';
 
-const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex}) => {
+const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -120,7 +120,8 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex}) => {
 
 ForexItem.propTypes = {
     forex: PropTypes.object.isRequired,
-    updateForex: PropTypes.func.isRequired
+    updateForex: PropTypes.func.isRequired,
+    isNew: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({

@@ -18,7 +18,7 @@ import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 
-const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto}) => {
+const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -118,12 +118,13 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto}) => {
 
 CryptoItem.protoTypes = {
     crypto: PropTypes.object.isRequired,
-    updateCrypto: PropTypes.func.isRequired
-}
+    updateCrypto: PropTypes.func.isRequired,
+    isNew: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = state => ({
     crypto: state.crypto
-})
+});
 
 export default
 connect(

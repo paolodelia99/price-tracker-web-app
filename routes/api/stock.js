@@ -4,12 +4,10 @@ const request = require('request');
 const config = require('config');
 const apiKey = config.get('ALPHA_API_KEY');
 
-//fixme: unica routes con un switch con tutti i timeFrame
-
-// @route    GET api/stock/:time_frame/:stock_name
+// @route    GET api/stock/getStock/:time_frame/:stock_name
 // @desc     get price of a stock based on the requested timeframe
 // @access   Public
-router.get('/:time_frame/:stock_name',async (req,res)=>{
+router.get('/getStock/:time_frame/:stock_name',async (req,res)=>{
 
     let timeFrame;
 

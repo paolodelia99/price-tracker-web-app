@@ -64,7 +64,7 @@ const setForexExchangeRate = (formForexName,toForexName) => async dispatch => {
             payload: exchangeRate
         })
     }catch (err) {
-        dispatch(setAlert('Exchange not found','alert-danger'))
+        dispatch(setAlert('Exchange not found','danger'))
     }
 }
 
@@ -83,6 +83,9 @@ export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
         const res = await axios.get(`/api/forex/${timeFrame}/${formForexName}/${toForexName}`)
 
         const data = res.data;
+        if(data['Note'])
+            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+
 
         let forexChartXValuesFunction = [];
         let forexChartCloseValuesFunction = [];
@@ -117,6 +120,10 @@ export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
         dispatch(setAlert('Error','alert-danger'))
     }
 };
+
+export const generateRandomExchange = () => dispatch => {
+
+}
 
 const getHeader = (timeFrame) =>{
     switch (timeFrame) {

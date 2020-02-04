@@ -24,17 +24,6 @@ body{
   text-decoration: none;
 }
 
-/*Dashboard*/
-.dashboard-big-wrapper{
-  display: flex;
-}
-
-/*Login page*/
-.text-link{
-  color: dodgerblue;
-  text-decoration: none;
-}
-
 /*Alert*/
 .alert {
   padding: 0.8rem;
@@ -74,6 +63,17 @@ body{
   background: #fff;
   color: #333;
   border: #ccc solid 1px;
+}
+
+/*Dashboard*/
+.dashboard-big-wrapper{
+  display: flex;
+}
+
+/*Login page*/
+.text-link{
+  color: dodgerblue;
+  text-decoration: none;
 }
 
 /*Selected Item*/

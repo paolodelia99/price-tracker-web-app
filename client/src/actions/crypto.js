@@ -84,6 +84,9 @@ export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch =
         const res = await axios.get(`/api/crypto/${timeFrame}/${cryptoCurrency}/${market}`);
 
         const data = res.data;
+        if(data['Note'])
+            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+
 
         //x-y for line chart
         let cryptoChartXValuesFunction = [];

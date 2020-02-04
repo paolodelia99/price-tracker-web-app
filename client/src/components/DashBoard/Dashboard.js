@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import { useTheme,ThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -40,12 +40,14 @@ import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
 import {takeOutEveryThing} from "../../actions/profile";
 import InputBase from "@material-ui/core/InputBase";
+import apiCallCounter from "../../reducers/apiCallCounter";
 
 const Dashboard = (
     {
         logout,
         auth: {user},
         profile :{profile,loading,stocks,forex,crypto},
+        apiCallCounter: {counter},
         getCurrentProfile,
         getStock,
         getForex,
@@ -58,12 +60,22 @@ const Dashboard = (
         getCurrentProfile();
     },[getCurrentProfile]);
 
+    const seconds = new Date().getSeconds();
     const classes = dashboardStyle();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [openSearchBar,setSearchBarOpen] = useState(false);
     const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
+
+    const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+
+    },[]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -119,7 +131,6 @@ const Dashboard = (
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar
-                    position="fixed"
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: open,
                     })}
@@ -256,6 +267,7 @@ Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
+    apiCallCounter: PropTypes.object.isRequired,
     getStock: PropTypes.func.isRequired,
     getForex: PropTypes.func.isRequired,
     getCrypto: PropTypes.func.isRequired,
@@ -266,7 +278,8 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    profile: state.profile
+    profile: state.profile,
+    apiCallCounter: state.apiCallCounter
 });
 
 export default connect(

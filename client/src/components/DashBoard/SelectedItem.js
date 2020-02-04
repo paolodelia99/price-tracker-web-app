@@ -17,11 +17,11 @@ const SelectedItem =
     const rightComponent = () =>{
         switch (selectedItem) {
             case 'stock':
-                return (<StockItem/>);
+                return (<StockItem isNew={false}/>);
             case 'forex':
-                return (<ForexItem/>);
+                return (<ForexItem isNew={false}/>);
             case 'crypto':
-                return (<CryptoItem/>);
+                return (<CryptoItem isNew={false}/>);
             default:
                 return (
                     <Spinner/>
