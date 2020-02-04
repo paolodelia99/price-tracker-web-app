@@ -1,5 +1,6 @@
 {
   "ALPHA_API_KEY": "2R9XUCRT0D21IUVX",
+  "ALPHA_API_KEY_2":"9SEJV46K465GDV17",
   "mongoURI": "mongodb+srv://PaoloTrade:Uyy6fsdpHScRWg8I@price-tracker-cluster-dzzzh.mongodb.net/test?retryWrites=true&w=majority",
   "jwtSecret": "priceTracker"
 }

@@ -13,9 +13,17 @@ export const getCrypto = (cryptoName) => async dispatch => {
     let cryptoCurrency = res[0];
     let market = res[1];
     try {
-        const res = await axios.get(`/api/crypto/daily/${cryptoCurrency}/${market}`);
+        let res = await axios.get(`/api/crypto/getCrypto/daily/${cryptoCurrency}/${market}`);
 
-        const data = res.data;
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/crypto/getCrypto2/daily/${cryptoCurrency}/${market}`);
+
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+        }
+        console.log(data)
 
         //x-y for line chart
         let cryptoChartXValuesFunction = [];
@@ -54,9 +62,17 @@ export const getCrypto = (cryptoName) => async dispatch => {
 
 const setCryptoExchangeRate = (cryptoCurrency,market) => async dispatch => {
     try {
-        const exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
+        let exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
 
-        const exchangeRateData = exchangeRateRes.data;
+        let exchangeRateData = exchangeRateRes.data;
+        if(exchangeRateData['Note']){
+            exchangeRateRes = await axios.get(`/api/crypto/exchange-rate2/${cryptoCurrency}/${market}`)
+
+            exchangeRateData = exchangeRateRes.data;
+            if(exchangeRateData['Note']){
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+            }
+        }
 
         const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
 
@@ -73,7 +89,7 @@ export const updateCrypto = (cryptoName, timeFrame) => dispatch => {
     dispatch(takeOutCrypto());
 
     dispatch(changeCryptoTimeFrame(cryptoName,timeFrame))
-}
+};
 
 //Change Crypto timeFrame
 export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch => {
@@ -81,11 +97,16 @@ export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch =
     let cryptoCurrency = res[0];
     let market = res[1];
     try {
-        const res = await axios.get(`/api/crypto/${timeFrame}/${cryptoCurrency}/${market}`);
+        let res = await axios.get(`/api/crypto/getCrypto/${timeFrame}/${cryptoCurrency}/${market}`);
 
-        const data = res.data;
-        if(data['Note'])
-            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/crypto/getCrypto2/${timeFrame}/${cryptoCurrency}/${market}`);
+
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+        }
 
 
         //x-y for line chart

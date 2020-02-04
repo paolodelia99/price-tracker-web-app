@@ -46,7 +46,7 @@ const Dashboard = (
     {
         logout,
         auth: {user},
-        profile :{profile,loading,stocks,forex,crypto},
+        profile :{profile,loading,stocksCollection,forexCollection,cryptoCollection},
         apiCallCounter: {counter},
         getCurrentProfile,
         getStock,
@@ -197,7 +197,7 @@ const Dashboard = (
                         <ListItemText primary='Stocks'/>
                     </ListItem>
                     <List>
-                        {stocks.map(stock => (
+                        {stocksCollection.map(stock => (
                             <ListItem
                                 button
                                 key={stock._id}
@@ -215,7 +215,7 @@ const Dashboard = (
                         <ListItemText primary='Forex'/>
                     </ListItem>
                     <List>
-                        {forex.map(forexItem => (
+                        {forexCollection.map(forexItem => (
                             <ListItem
                                 button
                                 key={forexItem._id}
@@ -233,7 +233,7 @@ const Dashboard = (
                         <ListItemText primary='Crypto'/>
                     </ListItem>
                     <List>
-                        {crypto.map(cryptoItem => (
+                        {cryptoCollection.map(cryptoItem => (
                             <ListItem
                                 button
                                 key={cryptoItem._id}

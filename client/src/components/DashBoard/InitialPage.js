@@ -8,15 +8,14 @@ import Typography from "@material-ui/core/Typography";
 //JSON OBJ
 import digitalCurrency from '../../resources/digitalCurrency';
 import physicalCurrency from '../../resources/physicalCurrency';
+import popularMarkets from '../../resources/popularMarket';
 //Redux
 import { connect } from 'react-redux'
 import StockItem from "../FinancialItem/StockItem";
 import ForexItem from "../FinancialItem/ForexItem";
 import CryptoItem from "../FinancialItem/CryptoItem";
 import {takeOutEveryThing} from "../../actions/profile";
-import {getStock} from "../../actions/stock";
-import axios from "axios";
-import {setAlert} from "../../actions/alert";
+import {getRandomStock} from "../../actions/stock";
 import {getForex} from "../../actions/forex";
 import {getCrypto} from "../../actions/crypto";
 let randomWords = require('random-words');
@@ -24,22 +23,23 @@ let randomWords = require('random-words');
 const InitialPage =
     ({
          auth:{user},
-         profile :{profile,loading,stocks,forex,crypto},
+         profile :{profile,loading,stocksCollection,forexCollection,cryptoCollection},
          takeOutEveryThing,
-         getStock
+         getRandomStock,
+         getForex,
+        getCrypto
     }) => {
     const classes = initialPageStyle();
 
-    const selectRandom = () =>{
+    const selectRandom = () => {
         const randomNumber = Math.floor(Math.random() * 3) + 1;
         switch (randomNumber) {
             case 1:
                 let casualWord = randomWords();
-                casualWord = ""+casualWord.substring(0,2);
+                casualWord = "" + casualWord.substring(0, 2);
                 takeOutEveryThing();
-                let randomSymbol = getRandomStock(casualWord);
-                getStock(randomSymbol);
-                return(<StockItem isNew={true}/>);
+                getRandomStock(casualWord)
+                return (<StockItem isNew={true}/>);
             case 2:
                 let randomExchange = getRandomForexExchange();
                 takeOutEveryThing();
@@ -52,29 +52,10 @@ const InitialPage =
                 return (<CryptoItem isNew={true}/>);
             default:
                 let casualWord1 = randomWords();
-                casualWord = ""+casualWord1.substring(0,2);
+                casualWord = "" + casualWord1.substring(0, 2);
                 takeOutEveryThing();
-                let randomSymbol1 = getRandomStock(casualWord);
-                getStock(randomSymbol1);
-                return(<StockItem isNew={true}/>);
-            }
-    };
-
-    const getRandomStock = async (word) => {
-        try {
-            const searchRes = await axios.get(`/api/stock/search/${word}`);
-
-            const searchData = searchRes.data;
-
-            const arrayLength = searchData['bestMatches'].length;
-
-            const randomIndex = Math.floor(Math.random() * arrayLength) + 1;
-
-            console.log(randomIndex);
-
-            return searchData['bestMatches'][randomIndex]['1. symbol']
-        }catch (err) {
-            setAlert('Error','danger')
+                getRandomStock(casualWord1)
+                return (<StockItem isNew={true}/>);
         }
     };
 
@@ -94,20 +75,25 @@ const InitialPage =
     const getRandomCrypto = () =>{
         const cryptoList = digitalCurrency;
         const lengthCryptoList =  cryptoList.digitalCurrencyList.length;
-        const forexList = physicalCurrency;
-        const lengthList =  forexList.physicalCurrencyList.length;
+        const marketList = popularMarkets;
+        const lengthList =  marketList.popularMarket.length;
 
         const randomItem1 = Math.floor(Math.random() *lengthCryptoList)+1;
         const randomItem2 =  Math.floor(Math.random() *lengthList)+1;
 
-        return ""+forexList.digitalCurrencyList[randomItem1]['currency code']+"/"+forexList.physicalCurrencyList[randomItem2]['currency code'];
+        console.log(`cyrpto code:${cryptoList.digitalCurrencyList[randomItem1]['currency code']}, crypto name: ${cryptoList.digitalCurrencyList[randomItem1]['currency name']}`)
+        console.log(`market ${marketList.popularMarket[randomItem2]['currency code']}, market name: ${marketList.popularMarket[randomItem2]['currency name']}`)
+
+        console.log(cryptoList.digitalCurrencyList[randomItem1]['currency code']+"/"+marketList.popularMarket[randomItem2]['currency code'])
+
+        return ""+cryptoList.digitalCurrencyList[randomItem1]['currency code']+"/"+marketList.popularMarket[randomItem2]['currency code'];
     };
 
     return (
         <Fragment>
             <Container maxWidth='lg' className={classes.container}>
                 <Grid container spacing={3}>
-                    <Grid item md={12} spacing={2}>
+                    <Grid item md={12}>
                         <Typography variant='h4' align='center' className={classes.text}>
                             Welcome {user && user.firstName}
                         </Typography>
@@ -115,7 +101,7 @@ const InitialPage =
                             Take a look to this:
                         </Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid item md={12} className='selected-item-wrapper'>
                         {selectRandom()}
                     </Grid>
                 </Grid>
@@ -127,8 +113,10 @@ const InitialPage =
 InitialPage.propTypes = {
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
-    takeOutEveryThing: PropTypes.object.isRequired,
-    getStock: PropTypes.func.isRequired
+    takeOutEveryThing: PropTypes.func.isRequired,
+    getCrypto: PropTypes.func.isRequired,
+    getForex: PropTypes.func.isRequired,
+    getRandomStock: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -140,5 +128,8 @@ export default
 connect(
     mapStateToProps,
     {takeOutEveryThing,
-        getStock}
+        getForex,
+        getCrypto,
+        getRandomStock
+    }
 )(InitialPage);

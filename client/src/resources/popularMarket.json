@@ -1,0 +1,68 @@
+{
+  "popularMarket": [
+    {
+      "currency code": "AED",
+      "currency name": "United Arab Emirates Dirham"
+    },
+    {
+      "currency code": "EUR",
+      "currency name": "Euro"
+    },
+    {
+      "currency code": "USD",
+      "currency name": "United States Dollar"
+    },
+    {
+      "currency code": "CAD",
+      "currency name": "Canadian Dollar"
+    },
+    {
+      "currency code": "AUD",
+      "currency name": "Australian Dollar"
+    },
+    {
+      "currency code": "CNY",
+      "currency name": "Chinese Yuan"
+    },
+    {
+      "currency code": "JPY",
+      "currency name": "Japanese Yen"
+    },
+    {
+      "currency code": "DKK",
+      "currency name": "Danish Krone"
+    },
+    {
+      "currency code": "CHF",
+      "currency name": "Swiss Franc"
+    },
+    {
+      "currency code": "SEK",
+      "currency name": "Swedish Krona"
+    },
+    {
+      "currency code": "GBP",
+      "currency name": "British Pound Sterling"
+    },
+    {
+      "currency code": "ARS",
+      "currency name": "Argentine Peso"
+    },
+    {
+      "currency code": "RUB",
+      "currency name": "Russian Ruble"
+    },
+    {
+      "currency code": "INR",
+      "currency name": "Indian Rupee"
+    },
+    {
+      "currency code": "SGD",
+      "currency name": "Singapore Dollar"
+    },
+    {
+      "currency code": "NZD",
+      "currency name": "New Zealand Dollar"
+    }
+  ]
+}

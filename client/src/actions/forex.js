@@ -13,9 +13,18 @@ export const getForex = (forexName) => async dispatch => {
     let formForexName = res[0];
     let toForexName = res[1];
     try {
-        const res = await axios.get(`/api/forex/daily/${formForexName}/${toForexName}`);
+        let res = await axios.get(`/api/forex/getForex/daily/${formForexName}/${toForexName}`);
 
-        const data = res.data;
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/forex/getForex2/daily/${formForexName}/${toForexName}`);
+
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+        }
+
+        console.log(data)
 
         let forexChartXValuesFunction = [];
         let forexChartCloseValuesFunction = [];
@@ -53,9 +62,16 @@ export const getForex = (forexName) => async dispatch => {
 
 const setForexExchangeRate = (formForexName,toForexName) => async dispatch => {
     try {
-        const exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
+        let exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
 
-        const exchangeRateData = exchangeRateRes.data;
+        let exchangeRateData = exchangeRateRes.data;
+        if(exchangeRateData['Note']){
+            exchangeRateRes = await axios.get(`/api/forex/exchange-rate2/${formForexName}/${toForexName}`)
+
+            exchangeRateData = exchangeRateRes.data;
+            if(exchangeRateData['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+        }
 
         const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
 
@@ -80,12 +96,19 @@ export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
     let formForexName = res[0];
     let toForexName = res[1];
     try {
-        const res = await axios.get(`/api/forex/${timeFrame}/${formForexName}/${toForexName}`)
+        let res = await axios.get(`/api/forex/getForex/${timeFrame}/${formForexName}/${toForexName}`)
 
-        const data = res.data;
-        if(data['Note'])
-            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/forex/getForex2/${timeFrame}/${formForexName}/${toForexName}`)
 
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
+
+        }
+
+        console.log(data)
 
         let forexChartXValuesFunction = [];
         let forexChartCloseValuesFunction = [];

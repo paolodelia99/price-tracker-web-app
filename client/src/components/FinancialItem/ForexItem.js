@@ -19,6 +19,7 @@ import Spinner from "../Layout/Spinner";
 //Redux
 import {updateForex} from '../../actions/forex';
 import {connect} from 'react-redux';
+import Button from "@material-ui/core/Button";
 
 const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
     const classes = selectStyle();
@@ -72,6 +73,12 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
+                {isNew ? (
+                    <Button
+                        variant='outlined'
+                        color='secondary'
+                    >Add To Forex</Button>
+                ) : null}
                 <FormControl className={classes.formControl}>
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame

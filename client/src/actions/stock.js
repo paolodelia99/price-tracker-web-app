@@ -9,9 +9,21 @@ import {setAlert} from "./alert";
 //default timeFrame daily-adjusted
 export const getStock = (stockName) => async dispatch => {
     try {
-        const res = await axios.get(`/api/stock/getStock/daily-adjusted/${stockName}`);
+        console.log(stockName)
+        let res = await axios.get(`/api/stock/getStock/daily/${stockName}`);
 
-        const data = res.data;
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/stock/getStock2/daily/${stockName}`);
+
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+            else if (data['Error Message'])
+                dispatch(setAlert(data['Error Message'],'danger'));
+        }
+
+        console.log(data)
 
         let stockChartXValuesFunction = [];
         let stockChartCloseValuesFunction = [];
@@ -48,6 +60,22 @@ export const getStock = (stockName) => async dispatch => {
     }
 };
 
+export const getRandomStock = (word) => async dispatch => {
+    try {
+        const searchRes = await axios.get(`/api/stock/search/${word}`);
+
+        const searchData = searchRes.data;
+
+        const arrayLength = searchData['bestMatches'].length;
+
+        const randomIndex = Math.floor(Math.random() * arrayLength) + 1;
+
+        dispatch(getStock((searchData['bestMatches'][randomIndex]['1. symbol'])));
+    }catch (err) {
+        setAlert('Error','danger')
+    }
+};
+
 //updateStock
 export const updateStock = (stockName,timeFrame) => async dispatch => {
     dispatch(takeOutStock());
@@ -59,11 +87,16 @@ export const updateStock = (stockName,timeFrame) => async dispatch => {
 export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
     try {
         console.log(`inside action, timeFrame: ${timeFrame}`)
-        const res = await axios.get(`/api/stock/getStock/${timeFrame}/${stockName}`);
+        let res = await axios.get(`/api/stock/getStock/${timeFrame}/${stockName}`);
 
-        const data = res.data;
-        if(data['Note'])
-            dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+        let data = res.data;
+        if(data['Note']){
+            res = await axios.get(`/api/stock/getStock2/${timeFrame}/${stockName}`);
+
+            data = res.data;
+            if(data['Note'])
+                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
+        }
 
         console.log(data)
 

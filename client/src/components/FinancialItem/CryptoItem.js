@@ -17,6 +17,7 @@ import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
+import Button from "@material-ui/core/Button";
 
 const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew}) => {
     const classes = selectStyle();
@@ -70,6 +71,12 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew})
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
+                {isNew ? (
+                    <Button
+                        variant='outlined'
+                        color='secondary'
+                    >Add To Crypto</Button>
+                ) : null}
                 <FormControl className={classes.formControl}>
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame

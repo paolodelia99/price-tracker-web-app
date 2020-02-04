@@ -7,9 +7,9 @@ import {
 
 const initialState = {
     profile: null,
-    stocks: [],
-    forex: [],
-    crypto: [],
+    stocksCollection: [],
+    forexCollection: [],
+    cryptoCollection: [],
     loading: true,
     selectedItem: null,
     error: {}
@@ -24,9 +24,9 @@ export default function (state= initialState,action) {
             return{
                 ...state,
                 profile: payload,
-                stocks: payload.stocks,
-                forex: payload.forex,
-                crypto: payload.crypto,
+                stocksCollection: payload.stocks,
+                forexCollection: payload.forex,
+                cryptoCollection: payload.crypto,
                 loading: false
             };
         case PROFILE_ERROR:
@@ -40,9 +40,9 @@ export default function (state= initialState,action) {
             return {
                 ...state,
                 profile: null,
-                stocks: [],
-                forex: [],
-                crypto: [],
+                stocksCollection: [],
+                forexCollection: [],
+                cryptoCollection: [],
                 loading: false
             };
         case SET_SELECTED_ITEM:
@@ -54,7 +54,7 @@ export default function (state= initialState,action) {
             return {
                 ...state,
                 selectedItem: null
-            }
+            };
         default:
             return state
     }
