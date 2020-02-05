@@ -1,4 +1,6 @@
 import React, {Fragment, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {Redirect} from 'react-router-dom';
+//Material UI imports
 import clsx from 'clsx';
 import { useTheme,ThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -16,13 +18,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import SearchIcon from '@material-ui/icons/Search';
 import ListItemText from '@material-ui/core/ListItemText';
-import Spinner from "../Layout/Spinner";
 import {dashboardStyle} from '../styles/dashboardStyle'
 import {landingTheme} from "../styles/landingTheme";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import {searchBarStyle} from '../styles/searchBarStyle'
+//Other components imports
 import SelectedItem from "./SelectedItem";
 import InitialPage from "./InitialPage";
+import Spinner from "../Layout/Spinner";
 import {InitialDashboardButton} from '../Layout/initialDashboardButton'
 //Icon
 import { Icon } from "@iconify/react";
@@ -42,6 +46,8 @@ import {takeOutEveryThing} from "../../actions/profile";
 import InputBase from "@material-ui/core/InputBase";
 import apiCallCounter from "../../reducers/apiCallCounter";
 import Alert from "../Layout/Alert";
+import Paper from "@material-ui/core/Paper";
+import SearchPage from "./SearchPage";
 
 const Dashboard = (
     {
@@ -61,11 +67,11 @@ const Dashboard = (
         getCurrentProfile();
     },[getCurrentProfile]);
 
-    const seconds = new Date().getSeconds();
     const classes = dashboardStyle();
+    const searchBarClasses = searchBarStyle();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
-    const [openSearchBar,setSearchBarOpen] = useState(false);
+    const [openSearchPage,setSearchPage] = useState(false);
     const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
 
@@ -90,15 +96,18 @@ const Dashboard = (
         removeSelectedItem();
         closeSearchPage();
         setItemSelected(false);
+        return (<Redirect  to="/dashboard" />)
     };
 
-    const openSearchPage = () => {
+    const setSearchPageOpen = (e) => {
+        e.preventDefault()
         console.log('open search Page');
-        setSearchBarOpen(true);
+        setSearchPage(true);
+        //todo: vedi come posso passare le props a search page component
     };
 
     const closeSearchPage = () =>{
-        setSearchBarOpen(false)
+        setSearchPage(false)
     }
 
     const setCurrentStock = (stockName) => {
@@ -124,6 +133,15 @@ const Dashboard = (
 
     console.log(user);
     console.log(profile);
+
+    const displayTheRightComponent = () => {
+        if(isItemSelected && !openSearchPage)
+            return (<SelectedItem/>)
+        else if(!isItemSelected && !openSearchPage)
+            return (<InitialPage/>)
+        else
+            return (<SearchPage/>)
+    }
 
     return loading && profile === null ? (
         <Spinner/>
@@ -157,19 +175,17 @@ const Dashboard = (
                             </InitialDashboardButton>
                         </Typography>
                         <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                value={keyWord}
-                                onClick={openSearchPage}
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
+                            <Paper component="form" className={searchBarClasses.root}>
+                                <InputBase
+                                    className={searchBarClasses.input}
+                                    placeholder="Search"
+                                    inputProps={{ 'aria-label': 'search google maps' }}
+                                />
+                                <IconButton type="submit" onClick={ e => setSearchPageOpen(e)} className={searchBarClasses.iconButton} aria-label="search">
+                                    <SearchIcon />
+                                </IconButton>
+                                <Divider className={searchBarClasses.divider} orientation="vertical" />
+                            </Paper>
                         </div>
                         <div className={classes.grow} />
                         <Fragment>
@@ -256,7 +272,7 @@ const Dashboard = (
                     <Alert/>
                     <div className={classes.drawerHeader} />
                     <div>
-                        {isItemSelected ? <SelectedItem/> : <InitialPage/>}
+                        {displayTheRightComponent()}
                     </div>
                 </main>
             </div>
