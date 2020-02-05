@@ -79,6 +79,7 @@ body{
 /*Selected Item*/
 .selected-item-wrapper{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -88,7 +89,7 @@ body{
 .financial-instrument-container{
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -100,13 +101,41 @@ body{
   align-items: center;
 }
 
+/*Crypto Item*/
+.crypto-full-name-container{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /*MEDIA QUERIES*/
 @media screen and (min-width: 240px) and (max-width: 375px) {
   .selected-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
   }
 }
 
@@ -117,6 +146,26 @@ body{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
   }
 }
 
@@ -126,6 +175,26 @@ body{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
   }
 }
 
@@ -135,9 +204,91 @@ body{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
   }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1200px) {
+  .selected-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  .financial-instrument-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selected-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .crypto-info{
+    flex-basis: 27%;
+  }
+
+  .crypto-full-name-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #timeframe-form-control{
+    flex-basis: 35%;
+  }
+
+  #type-of-chart-form-control{
+    flex-basis: 35%;
+  }
 }

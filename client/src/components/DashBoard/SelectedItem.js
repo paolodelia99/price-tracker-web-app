@@ -5,6 +5,7 @@ import CryptoItem from "../FinancialItem/CryptoItem";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from "../Layout/Spinner";
+import Alert from "../Layout/Alert";
 
 const SelectedItem =
     ({

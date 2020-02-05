@@ -41,6 +41,7 @@ import {getCurrentProfile} from "../../actions/profile";
 import {takeOutEveryThing} from "../../actions/profile";
 import InputBase from "@material-ui/core/InputBase";
 import apiCallCounter from "../../reducers/apiCallCounter";
+import Alert from "../Layout/Alert";
 
 const Dashboard = (
     {
@@ -252,6 +253,7 @@ const Dashboard = (
                         [classes.contentShift]: open,
                     })}
                 >
+                    <Alert/>
                     <div className={classes.drawerHeader} />
                     <div>
                         {isItemSelected ? <SelectedItem/> : <InitialPage/>}

@@ -47,6 +47,8 @@ const InitialPage =
                 return (<ForexItem />);
             case 3:
                 let randomCrypto = getRandomCrypto();
+                //get Markets
+                //check a random physical currency in the market and take the exchange
                 takeOutEveryThing();
                 getCrypto(randomCrypto);
                 return (<CryptoItem isNew={true}/>);
@@ -81,8 +83,6 @@ const InitialPage =
         const randomItem1 = Math.floor(Math.random() *lengthCryptoList)+1;
         const randomItem2 =  Math.floor(Math.random() *lengthList)+1;
 
-        console.log(`cyrpto code:${cryptoList.digitalCurrencyList[randomItem1]['currency code']}, crypto name: ${cryptoList.digitalCurrencyList[randomItem1]['currency name']}`)
-        console.log(`market ${marketList.popularMarket[randomItem2]['currency code']}, market name: ${marketList.popularMarket[randomItem2]['currency name']}`)
 
         console.log(cryptoList.digitalCurrencyList[randomItem1]['currency code']+"/"+marketList.popularMarket[randomItem2]['currency code'])
 

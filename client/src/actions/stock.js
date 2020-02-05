@@ -17,13 +17,9 @@ export const getStock = (stockName) => async dispatch => {
         let data = res.data;
         console.log(data.hasOwnProperty('Note'))
         if(data.hasOwnProperty('Note'))
-            data = await getStock2(stockName);
+            dispatch(setAlert('You\'ve reached the maximun API call for minute','danger'))
         else if(data.hasOwnProperty('Error Message'))
             dispatch(setAlert('Stock not found','alert-danger'))
-
-        if(dispatchAction){
-            dispatch(setAlert('You\'ve reached the maximun API call for minute','danger'))
-        }
 
         console.log(data);
 

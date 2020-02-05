@@ -18,11 +18,25 @@ import {addNewCrypto} from "../../actions/profile";
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
+import bitcoinIcon from '@iconify/icons-mdi/bitcoin';
+
 import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 import Button from "@material-ui/core/Button";
 
-const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCrypto,profile:{cryptoCollection}}) => {
+const CryptoItem =
+    ({crypto:
+        {
+            crypto,
+            exchangeRate,
+            volume24Hour,
+            loading,
+            change24Hour
+        },
+         updateCrypto,
+         addNewCrypto,
+         profile:{cryptoCollection}
+    }) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -85,6 +99,24 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCr
         <Spinner/>
     ) : (
         <div className='financial-instrument-container'>
+            <div className="crypto-full-name-container">
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={bitcoinIcon} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={crypto.cryptoFullName} />
+                </ListItem>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={crypto.marketFullName} />
+                </ListItem>
+            </div>
             <div>
                 {displayTheRightPlot()}
             </div>
@@ -96,7 +128,7 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCr
                         onClick={e => addNewCrypto({newCrypto : crypto.cryptoName})}
                     >Add To Crypto</Button>
                 ) : null}
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} id='timeframe-form-control'>
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame
                     </InputLabel>
@@ -113,7 +145,7 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCr
                         <MenuItem value={'monthly'}>Monthly</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} id='type-of-chart-form-control'>
                     <InputLabel shrink id="type-of-chart-select-label">
                         Type of Chart
                     </InputLabel>
@@ -129,14 +161,30 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCr
                         <MenuItem value={'candlestick'}>CandleStick</MenuItem>
                     </Select>
                 </FormControl>
-                <ListItem>
+                {exchangeRate ? <ListItem className='crypto-info'>
                     <ListItemAvatar>
                         <Avatar>
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary="Exchange Rate" secondary={exchangeRate} />
-                </ListItem>
+                </ListItem> : null}
+                {volume24Hour ? <ListItem className='crypto-info'>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary="Volume (24h)" secondary={volume24Hour} />
+                </ListItem> : null}
+               {change24Hour ? <ListItem className='crypto-info'>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary="Change % (24h)" secondary={change24Hour} />
+                </ListItem> : null}
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import {
     GET_CRYPTO,
     TAKE_OUT_CRYPTO,
     UPDATE_CRYPTO,
-    SET_CRYPTO_EXCHANGE_RATE
+    SET_CRYPTO_INFO
 } from "./types";
 import axios from 'axios';
 import {setAlert} from "./alert";
@@ -46,6 +46,8 @@ export const getCrypto = (cryptoName) => async dispatch => {
 
         const cryptoData = {
             cryptoName: cryptoName,
+            cryptoFullName: data['Meta Data']["3. Digital Currency Name"],
+            marketFullName: data['Meta Data']["5. Market Name"],
             chartXValues: cryptoChartXValuesFunction,
             chartCloseValues: cryptoChartCloseValuesFunction,
             chartOpenValues: cryptoChartOpenValuesFunction,
@@ -69,21 +71,17 @@ const setCryptoExchangeRate = (cryptoCurrency,market) => async dispatch => {
         let exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
 
         let exchangeRateData = exchangeRateRes.data;
-        console.log(exchangeRateData.hasOwnProperty('Note'))
-        if(exchangeRateData.hasOwnProperty('Note')){
-            exchangeRateRes = await axios.get(`/api/crypto/exchange-rate2/${cryptoCurrency}/${market}`)
 
-            exchangeRateData = exchangeRateRes.data;
-            if(exchangeRateData.hasOwnProperty('Note')){
-                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
-            }
-        }
+        const cryptoInfo = {
+            price: exchangeRateData['DISPLAY']['PRICE'],
+            volume24Hour: exchangeRateData['DISPLAY']['VOLUME24HOURTO'],
+            change24Hour: exchangeRateData['DISPLAY']['CHANGEPCT24HOUR'],
+        };
 
-        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
 
         dispatch({
-            type: SET_CRYPTO_EXCHANGE_RATE,
-            payload: exchangeRate
+            type: SET_CRYPTO_INFO,
+            payload: cryptoInfo
         })
     }catch (err) {
         dispatch(setAlert('Exchange rate not found','alert-danger'))
@@ -134,6 +132,8 @@ export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch =
 
         const cryptoData = {
             cryptoName: cryptoName,
+            cryptoFullName: data['Meta Data']["3. Digital Currency Name"],
+            marketFullName: data['Meta Data']["5. Market Name"],
             chartXValues: cryptoChartXValuesFunction,
             chartCloseValues: cryptoChartCloseValuesFunction,
             chartOpenValues: cryptoChartOpenValuesFunction,
