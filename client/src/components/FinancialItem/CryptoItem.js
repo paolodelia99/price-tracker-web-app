@@ -1,7 +1,6 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import Spinner from "../Layout/Spinner";
+//Material UI imports
 import {selectStyle} from "../styles/selectStyle";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,7 +10,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
+//Redux
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {updateCrypto} from '../../actions/crypto';
+import {addNewCrypto} from "../../actions/profile";
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
@@ -19,7 +22,7 @@ import LineChart from "../Plots/LineChart";
 import CandleStickChart from "../Plots/CandleStickChart";
 import Button from "@material-ui/core/Button";
 
-const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew}) => {
+const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto,addNewCrypto,profile:{cryptoCollection}}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -40,6 +43,21 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew})
     const handleChartChange = e => {
         setTypeOfChart(e.target.value);
     };
+
+    const checkIfCryptoIsInList = ()=> {
+        let isCryptoInList = false;
+
+        if(cryptoCollection.length === 0)
+            return isCryptoInList;
+        else{
+            for(let i=0;i<cryptoCollection.length;i++)
+                if(cryptoCollection[i].cryptoName === crypto.cryptoName){
+                    isCryptoInList = true;
+                    break
+                }
+            return isCryptoInList;
+        }
+    }
 
     const displayTheRightPlot = () => {
         switch (typeOfChart) {
@@ -71,10 +89,11 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew})
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
-                {isNew ? (
+                {!checkIfCryptoIsInList() ? (
                     <Button
                         variant='outlined'
                         color='secondary'
+                        onClick={e => addNewCrypto({newCrypto : crypto.cryptoName})}
                     >Add To Crypto</Button>
                 ) : null}
                 <FormControl className={classes.formControl}>
@@ -125,16 +144,21 @@ const CryptoItem = ({crypto: {crypto,exchangeRate,loading},updateCrypto, isNew})
 
 CryptoItem.protoTypes = {
     crypto: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     updateCrypto: PropTypes.func.isRequired,
-    isNew: PropTypes.bool.isRequired
+    addNewCrypto: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    crypto: state.crypto
+    crypto: state.crypto,
+    profile: state.profile
 });
 
 export default
 connect(
     mapStateToProps,
-    {updateCrypto}
+    {
+        updateCrypto,
+        addNewCrypto
+    }
 )(CryptoItem);

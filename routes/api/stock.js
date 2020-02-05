@@ -67,7 +67,7 @@ router.get('/getStock2/:time_frame/:stock_name',async (req,res)=>{
     }
 
     try{
-        await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey2}`,
+        await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.stock_name}&apikey=${apiKey2}`,
             (err,response, body) => {
                 const content = JSON.parse(body);
 

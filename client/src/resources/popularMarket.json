@@ -29,10 +29,6 @@
       "currency name": "Japanese Yen"
     },
     {
-      "currency code": "DKK",
-      "currency name": "Danish Krone"
-    },
-    {
       "currency code": "CHF",
       "currency name": "Swiss Franc"
     },
@@ -45,20 +41,12 @@
       "currency name": "British Pound Sterling"
     },
     {
-      "currency code": "ARS",
-      "currency name": "Argentine Peso"
-    },
-    {
       "currency code": "RUB",
       "currency name": "Russian Ruble"
     },
     {
       "currency code": "INR",
       "currency name": "Indian Rupee"
-    },
-    {
-      "currency code": "SGD",
-      "currency name": "Singapore Dollar"
     },
     {
       "currency code": "NZD",

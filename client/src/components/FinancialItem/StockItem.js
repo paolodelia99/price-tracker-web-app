@@ -1,18 +1,22 @@
 import React, {useRef,useLayoutEffect, useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Spinner from '../Layout/Spinner'
+//Material Ui imports
 import {selectStyle} from "../styles/selectStyle";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import LineChart from "../Plots/LineChart";
-import CandleStickChart from "../Plots/CandleStickChart";
-import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
 import Button from "@material-ui/core/Button";
+//Other components import
+import CandleStickChart from "../Plots/CandleStickChart";
+import LineChart from "../Plots/LineChart";
+import Spinner from '../Layout/Spinner'
+//Redux
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
+import {addNewStock} from "../../actions/profile";
 
-const StockItem = ({stock: {loading, stock},updateStock},isNew) =>{
+const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateStock,addNewStock}) =>{
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -33,6 +37,21 @@ const StockItem = ({stock: {loading, stock},updateStock},isNew) =>{
     const handleChartChange = e => {
         setTypeOfChart(e.target.value);
     };
+
+    const checkIfStockIsInList = () => {
+        let stockIsInList = false;
+
+        if(stocksCollection.length === 0)
+            return stockIsInList;
+        else{
+            for(let i = 0;i<stocksCollection.length;i++)
+                if(stocksCollection[i].stockName === stock.stockName){
+                    stockIsInList = true;
+                    break
+                }
+            return stockIsInList;
+        }
+    }
 
     const displayTheRightPlot = () => {
         switch (typeOfChart) {
@@ -64,10 +83,11 @@ const StockItem = ({stock: {loading, stock},updateStock},isNew) =>{
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
-                {isNew ? (
+                {!checkIfStockIsInList() ? (
                     <Button
                         variant='outlined'
                         color='secondary'
+                        onClick={ e => addNewStock({newStock: stock.stockName})}
                     >Add To Stocks</Button>
                 ) : null}
                 <FormControl className={classes.formControl} >
@@ -111,18 +131,25 @@ const StockItem = ({stock: {loading, stock},updateStock},isNew) =>{
 
 StockItem.propTypes = {
     stock: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     changeStockTimeFrame: PropTypes.func.isRequired,
     takeOutStock: PropTypes.func.isRequired,
     updateStock: PropTypes.func.isRequired,
-    isNew: PropTypes.bool.isRequired
+    addNewStock: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    stock: state.stock
+    stock: state.stock,
+    profile: state.profile
 })
 
 export default
 connect(
     mapStateToProps,
-    {changeStockTimeFrame,takeOutStock,updateStock}
+    {
+        changeStockTimeFrame,
+        takeOutStock,
+        updateStock,
+        addNewStock
+    }
 )(StockItem);

@@ -9,7 +9,7 @@ import {
     UPDATE_PROFILE,
     CLEAR_PROFILE,
     SET_SELECTED_ITEM,
-    REMOVE_SELECTED_ITEM,
+    REMOVE_SELECTED_ITEM, ADD_STOCK, ADD_FOREX, ADD_CRYPTO,
 } from './types';
 
 // Get current users profile
@@ -41,6 +41,84 @@ export const takeOutEveryThing = () => dispatch => {
     dispatch(takeOutForex());
     dispatch(takeOutCrypto());
 };
+
+export const addNewStock = (newStock) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.post('/api/profile/newStock/',newStock,config);
+
+        dispatch({
+            type:ADD_STOCK,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Stock Added!','success'))
+    }catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+    }
+};
+
+//Add new Forex
+export const addNewForex = (newForex) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.post('/api/profile/newForex/',newForex,config);
+
+        dispatch({
+            type:ADD_FOREX,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Forex Added!','success'))
+    }catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+    }
+};
+
+//add new Crypto
+export const addNewCrypto = (newCrypto) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.post('/api/profile/newCrypto/',newCrypto,config);
+
+        dispatch({
+            type:ADD_CRYPTO,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Crypto Added!','success'))
+    }catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+    }
+};
+
 
 export const removeSelectedItem = () => dispatch => {
     dispatch({

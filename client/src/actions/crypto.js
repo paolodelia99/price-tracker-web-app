@@ -16,13 +16,17 @@ export const getCrypto = (cryptoName) => async dispatch => {
         let res = await axios.get(`/api/crypto/getCrypto/daily/${cryptoCurrency}/${market}`);
 
         let data = res.data;
-        if(data['Note']){
+        console.log(data.hasOwnProperty('Note'))
+        if(data.hasOwnProperty('Note')){
             res = await axios.get(`/api/crypto/getCrypto2/daily/${cryptoCurrency}/${market}`);
 
             data = res.data;
-            if(data['Note'])
+            if(data.hasOwnProperty('Note'))
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
-        }
+        }else if(data.hasOwnProperty('Error Message'))
+            dispatch(setAlert('Crypto not found','danger'))
+
+
         console.log(data)
 
         //x-y for line chart
@@ -65,11 +69,12 @@ const setCryptoExchangeRate = (cryptoCurrency,market) => async dispatch => {
         let exchangeRateRes = await axios.get(`/api/crypto/exchange-rate/${cryptoCurrency}/${market}`)
 
         let exchangeRateData = exchangeRateRes.data;
-        if(exchangeRateData['Note']){
+        console.log(exchangeRateData.hasOwnProperty('Note'))
+        if(exchangeRateData.hasOwnProperty('Note')){
             exchangeRateRes = await axios.get(`/api/crypto/exchange-rate2/${cryptoCurrency}/${market}`)
 
             exchangeRateData = exchangeRateRes.data;
-            if(exchangeRateData['Note']){
+            if(exchangeRateData.hasOwnProperty('Note')){
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
             }
         }
@@ -100,11 +105,12 @@ export const changeCryptoTimeFrame = (cryptoName, timeFrame) => async dispatch =
         let res = await axios.get(`/api/crypto/getCrypto/${timeFrame}/${cryptoCurrency}/${market}`);
 
         let data = res.data;
-        if(data['Note']){
+        console.log(data.hasOwnProperty('Note'))
+        if(data.hasOwnProperty('Note')){
             res = await axios.get(`/api/crypto/getCrypto2/${timeFrame}/${cryptoCurrency}/${market}`);
 
             data = res.data;
-            if(data['Note'])
+            if(data.hasOwnProperty('Note'))
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
         }
 

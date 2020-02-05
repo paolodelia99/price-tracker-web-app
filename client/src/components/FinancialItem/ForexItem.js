@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
+// Material UI imports
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -9,6 +9,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import {selectStyle} from "../styles/selectStyle";
+import Button from "@material-ui/core/Button";
 //Icon
 import { Icon } from "@iconify/react";
 import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
@@ -19,9 +20,10 @@ import Spinner from "../Layout/Spinner";
 //Redux
 import {updateForex} from '../../actions/forex';
 import {connect} from 'react-redux';
-import Button from "@material-ui/core/Button";
+import {addNewForex} from "../../actions/profile";
+import PropTypes from 'prop-types';
 
-const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
+const ForexItem = ({forex: {forex,exchangeRate,loading},profile:{forexCollection},addNewForex,updateForex}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -42,6 +44,21 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
     const handleChartChange = e => {
         setTypeOfChart(e.target.value);
     };
+
+    const checkIfForesIsInList = () => {
+        let isForexInList = false;
+
+        if(forexCollection.length === 0)
+            return isForexInList;
+        else{
+            for(let i=0;i<forexCollection.length;i++)
+                if(forexCollection[i].forexName === forex.forexName){
+                    isForexInList = true;
+                    break;
+                }
+            return isForexInList;
+        }
+    }
 
     const displayTheRightPlot = () => {
         switch (typeOfChart) {
@@ -73,10 +90,11 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
                 {displayTheRightPlot()}
             </div>
             <div className='selected-container'>
-                {isNew ? (
+                {!checkIfForesIsInList() ? (
                     <Button
                         variant='outlined'
                         color='secondary'
+                        onClick={ e => addNewForex({newForex: forex.forexName})}
                     >Add To Forex</Button>
                 ) : null}
                 <FormControl className={classes.formControl}>
@@ -127,16 +145,21 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},updateForex,isNew}) => {
 
 ForexItem.propTypes = {
     forex: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     updateForex: PropTypes.func.isRequired,
-    isNew: PropTypes.bool.isRequired
-}
+    addNewForex: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
-    forex: state.forex
-})
+    forex: state.forex,
+    profile: state.profile
+});
 
 export default
 connect(
     mapStateToProps,
-    {updateForex}
+    {
+        updateForex,
+        addNewForex
+    }
 )(ForexItem);

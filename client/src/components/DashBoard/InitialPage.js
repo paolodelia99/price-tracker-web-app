@@ -39,12 +39,12 @@ const InitialPage =
                 casualWord = "" + casualWord.substring(0, 2);
                 takeOutEveryThing();
                 getRandomStock(casualWord)
-                return (<StockItem isNew={true}/>);
+                return (<StockItem />);
             case 2:
                 let randomExchange = getRandomForexExchange();
                 takeOutEveryThing();
                 getForex(randomExchange);
-                return (<ForexItem isNew={true}/>);
+                return (<ForexItem />);
             case 3:
                 let randomCrypto = getRandomCrypto();
                 takeOutEveryThing();
@@ -55,7 +55,7 @@ const InitialPage =
                 casualWord = "" + casualWord1.substring(0, 2);
                 takeOutEveryThing();
                 getRandomStock(casualWord1)
-                return (<StockItem isNew={true}/>);
+                return (<StockItem />);
         }
     };
 

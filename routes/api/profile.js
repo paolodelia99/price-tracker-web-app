@@ -73,7 +73,7 @@ router.post('/newStock', auth, async (req,res)=>{
         const newStock = {
             _id:  mongoose.Types.ObjectId(),
             stockName: req.body.newStock
-        }
+        };
 
         try {
             // Using upsert option (creates new doc if no match is found):

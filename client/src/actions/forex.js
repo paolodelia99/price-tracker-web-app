@@ -16,11 +16,12 @@ export const getForex = (forexName) => async dispatch => {
         let res = await axios.get(`/api/forex/getForex/daily/${formForexName}/${toForexName}`);
 
         let data = res.data;
-        if(data['Note']){
+        console.log(data.hasOwnProperty('Note'))
+        if(data.hasOwnProperty('Note')){
             res = await axios.get(`/api/forex/getForex2/daily/${formForexName}/${toForexName}`);
 
             data = res.data;
-            if(data['Note'])
+            if(data.hasOwnProperty('Note'))
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
         }
 
@@ -65,11 +66,12 @@ const setForexExchangeRate = (formForexName,toForexName) => async dispatch => {
         let exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
 
         let exchangeRateData = exchangeRateRes.data;
-        if(exchangeRateData['Note']){
+        console.log(exchangeRateData.hasOwnProperty('Note'))
+        if(exchangeRateData.hasOwnProperty('Note')){
             exchangeRateRes = await axios.get(`/api/forex/exchange-rate2/${formForexName}/${toForexName}`)
 
             exchangeRateData = exchangeRateRes.data;
-            if(exchangeRateData['Note'])
+            if(exchangeRateData.hasOwnProperty('Note'))
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
         }
 
@@ -99,11 +101,12 @@ export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
         let res = await axios.get(`/api/forex/getForex/${timeFrame}/${formForexName}/${toForexName}`)
 
         let data = res.data;
-        if(data['Note']){
+        console.log(data.hasOwnProperty('Note'))
+        if(data.hasOwnProperty('Note')){
             res = await axios.get(`/api/forex/getForex2/${timeFrame}/${formForexName}/${toForexName}`)
 
             data = res.data;
-            if(data['Note'])
+            if(data.hasOwnProperty('Note'))
                 dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'))
 
         }
@@ -144,10 +147,6 @@ export const changeForexTimeFrame = (forexName,timeFrame) => async dispatch => {
     }
 };
 
-export const generateRandomExchange = () => dispatch => {
-
-}
-
 const getHeader = (timeFrame) =>{
     switch (timeFrame) {
         case 'daily':
@@ -161,7 +160,7 @@ const getHeader = (timeFrame) =>{
     }
 };
 
-//default timeFrame daily-adjusted
+//take out forex from the reducer
 export const takeOutForex = () => dispatch => {
     dispatch({
         type: TAKE_OUT_FOREX

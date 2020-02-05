@@ -17,9 +17,9 @@ const SelectedItem =
     const rightComponent = () =>{
         switch (selectedItem) {
             case 'stock':
-                return (<StockItem isNew={false}/>);
+                return (<StockItem />);
             case 'forex':
-                return (<ForexItem isNew={false}/>);
+                return (<ForexItem/>);
             case 'crypto':
                 return (<CryptoItem isNew={false}/>);
             default:
