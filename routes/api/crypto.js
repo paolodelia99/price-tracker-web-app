@@ -80,7 +80,7 @@ router.get('/getCrypto2/:time_frame/:crypto_simbol/:market',async (req,res)=>{
     let timeFrame = getTimeFrame(req.params.time_frame);
 
     try{
-        await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=${apiKey2}`,
+        await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.crypto_simbol}&outputsize=compact&market=${req.params.market}&apikey=demo}`,
             (err,response, body) => {
 
             const content = JSON.parse(body);

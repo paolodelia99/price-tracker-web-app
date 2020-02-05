@@ -66,16 +66,8 @@ const setForexExchangeRate = (formForexName,toForexName) => async dispatch => {
         let exchangeRateRes = await axios.get(`/api/forex/exchange-rate/${formForexName}/${toForexName}`)
 
         let exchangeRateData = exchangeRateRes.data;
-        console.log(exchangeRateData.hasOwnProperty('Note'))
-        if(exchangeRateData.hasOwnProperty('Note')){
-            exchangeRateRes = await axios.get(`/api/forex/exchange-rate2/${formForexName}/${toForexName}`)
 
-            exchangeRateData = exchangeRateRes.data;
-            if(exchangeRateData.hasOwnProperty('Note'))
-                dispatch(setAlert('You\'ve reached the maxium API call per minute','danger'));
-        }
-
-        const exchangeRate = exchangeRateData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+        const exchangeRate = exchangeRateData["rates"][toForexName];
 
         dispatch({
             type: SET_FOREX_EXCHANGE_RATE,

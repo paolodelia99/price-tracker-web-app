@@ -10,24 +10,7 @@ const apiKey2 = config.get('ALPHA_API_KEY_2');
 // @access   Public
 router.get('/getStock/:time_frame/:stock_name',async (req,res)=>{
 
-    let timeFrame;
-
-    switch (req.params.time_frame) {
-        case 'daily':
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-            break;
-        case 'daily-adjusted':
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-            break;
-        case 'weekly':
-            timeFrame = 'TIME_SERIES_WEEKLY_ADJUSTED';
-            break;
-        case 'monthly':
-            timeFrame = 'TIME_SERIES_MONTHLY_ADJUSTED';
-            break;
-        default:
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-    }
+    let timeFrame = getTimeFrame(req.params.time_frame);
 
     try{
         await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.stock_name}&outputsize=compact&apikey=${apiKey}`,
@@ -42,29 +25,28 @@ router.get('/getStock/:time_frame/:stock_name',async (req,res)=>{
     }
 });
 
+//get Time frame Function
+const getTimeFrame = (timeFrame) =>{
+    switch (timeFrame) {
+        case 'daily':
+            return 'TIME_SERIES_DAILY_ADJUSTED';
+        case 'daily-adjusted':
+            return 'TIME_SERIES_DAILY_ADJUSTED';
+        case 'weekly':
+            return 'TIME_SERIES_WEEKLY_ADJUSTED';
+        case 'monthly':
+            return 'TIME_SERIES_MONTHLY_ADJUSTED';
+        default:
+            return 'TIME_SERIES_DAILY_ADJUSTED';
+    }
+};
+
 // @route    GET api/stock/getStock2/:time_frame/:stock_name
 // @desc     get price of a stock based on the requested timeframe
 // @access   Public
 router.get('/getStock2/:time_frame/:stock_name',async (req,res)=>{
 
-    let timeFrame;
-
-    switch (req.params.time_frame) {
-        case 'daily':
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-            break;
-        case 'daily-adjusted':
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-            break;
-        case 'weekly':
-            timeFrame = 'TIME_SERIES_WEEKLY_ADJUSTED';
-            break;
-        case 'monthly':
-            timeFrame = 'TIME_SERIES_MONTHLY_ADJUSTED';
-            break;
-        default:
-            timeFrame = 'TIME_SERIES_DAILY_ADJUSTED';
-    }
+    let timeFrame = getTimeFrame(req.params.time_frame);
 
     try{
         await request(`https://www.alphavantage.co/query?function=${timeFrame}&symbol=${req.params.stock_name}&apikey=${apiKey2}`,

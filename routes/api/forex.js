@@ -10,7 +10,7 @@ const apiKey2 = config.get('ALPHA_API_KEY_2')
 // @access   Public
 router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
     try{
-        await request(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${req.params.from_currency}&to_currency=${req.params.to_currency}&apikey=${apiKey}`,
+        await request(`https://api.ratesapi.io/api/latest?base=${req.params.from_currency}&symbols=${req.params.to_currency}`,
             (err,response, body) => {
 
             const content = JSON.parse(body);
@@ -22,25 +22,6 @@ router.get('/exchange-rate/:from_currency/:to_currency',async (req,res)=>{
         res.status(500).send('Server Error');
     }
 });
-
-// @route    GET api/forex/exchange-rate2/:from_currency/:to_currency
-// @desc     get exchange rate
-// @access   Public
-router.get('/exchange-rate2/:from_currency/:to_currency',async (req,res)=>{
-    try{
-        await request(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${req.params.from_currency}&to_currency=${req.params.to_currency}&apikey=${apiKey2}`,
-            (err,response, body) => {
-
-                const content = JSON.parse(body);
-
-                res.json(content)
-            })
-    }catch (e) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
 
 // @route    GET api/forex/getForex/:time_frame/:from_currency/:to_currency
 // @desc     get data ccording to the requested timeframe
