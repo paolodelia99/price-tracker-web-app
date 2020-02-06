@@ -6,6 +6,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+//Icons
+import { Icon } from "@iconify/react";
+import cashUsdOutline from '@iconify/icons-mdi/cash-usd-outline';
+import financeIcon from '@iconify/icons-mdi/finance';
 //Other components import
 import CandleStickChart from "../Plots/CandleStickChart";
 import LineChart from "../Plots/LineChart";
@@ -15,8 +19,25 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {changeStockTimeFrame,takeOutStock,updateStock} from '../../actions/stock';
 import {addNewStock} from "../../actions/profile";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import ListItemText from "@material-ui/core/ListItemText";
 
-const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateStock,addNewStock}) =>{
+const StockItem = (
+    {stock:
+        {
+            loading,
+            stock,
+            stockFullName,
+            marketCap,
+            currentPrice,
+            dayChange,
+            numbersShares
+        },
+        profile:{stocksCollection},
+        updateStock,
+        addNewStock}) =>{
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -51,7 +72,7 @@ const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateSto
                 }
             return stockIsInList;
         }
-    }
+    };
 
     const displayTheRightPlot = () => {
         switch (typeOfChart) {
@@ -79,6 +100,16 @@ const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateSto
         <Spinner/>
     ) : (
         <div className='financial-instrument-container'>
+            <div className="stock-full-name-container">
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={financeIcon} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={stockFullName} />
+                </ListItem>
+            </div>
             <div>
                 {displayTheRightPlot()}
             </div>
@@ -90,7 +121,7 @@ const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateSto
                         onClick={ e => addNewStock({newStock: stock.stockName})}
                     >Add To Stocks</Button>
                 ) : null}
-                <FormControl className={classes.formControl} >
+                <FormControl className={classes.formControl} id='stock-timeframe-form-control'>
                     <InputLabel shrink id="timeframe-select-label">
                         TimeFrame
                     </InputLabel>
@@ -107,7 +138,7 @@ const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateSto
                         <MenuItem value={'monthly'}>Monthly</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} id='stock-type-of-chart-form-control'>
                     <InputLabel shrink id="type-of-chart-select-label">
                         Type of Chart
                     </InputLabel>
@@ -123,6 +154,46 @@ const StockItem = ({stock: {loading, stock},profile:{stocksCollection},updateSto
                         <MenuItem value={'candlestick'}>CandleStick</MenuItem>
                     </Select>
                 </FormControl>
+                {currentPrice ?
+                    <ListItem className='financial-item-info'>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Current Price" secondary={currentPrice} />
+                    </ListItem> : null
+                }
+                {marketCap ?
+                    <ListItem className='financial-item-info'>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Market Capitalization" secondary={marketCap} />
+                    </ListItem> : null
+                }
+                {dayChange ?
+                    <ListItem className='financial-item-info'>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Day Change %" secondary={dayChange} />
+                    </ListItem> : null
+                }
+                {numbersShares ?
+                    <ListItem className='financial-item-info'>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <Icon icon={financeIcon} width="20px" height="20px" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Numbers of Shares" secondary={numbersShares} />
+                    </ListItem> : null
+                }
             </div>
         </div>
     );

@@ -15,6 +15,7 @@ export const ADD_CRYPTO = 'ADD_CRYPTO';
 export const ADD_FOREX = 'ADD_FOREX';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const GET_STOCK = 'GET_STOCK';
+export const GET_STOCK_INFO = 'GET_STOCK_INFO';
 export const GET_FOREX = 'GET_FOREX';
 export const GET_CRYPTO = 'GET_CRYPTO';
 export const UPDATE_STOCK = 'UPDATE_STOCK';

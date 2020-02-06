@@ -29,7 +29,10 @@ const SearchPage =
             forexLoading,
             cryptoLoading
          },
-        findItems
+        findItems,
+        setStock,
+        setForex,
+        setCrypto
     }) => {
     useEffect(()=>{
         findItems(keyword)
@@ -37,7 +40,7 @@ const SearchPage =
 
 
         const foundStocksList = foundStocks.map(stock => (
-            <ListItem key={stock.stockFullName}>
+            <ListItem key={stock.stockFullName} onClick={()=> setStock(stock.stockSymbol)}>
                 <ListItemAvatar>
                     <Avatar>
                         <Icon icon={financeIcon} width="20px" height="20px" />
@@ -48,7 +51,10 @@ const SearchPage =
         ));
 
         const foundForexList = foundForex.map(forex => (
-            <ListItem key={forex.fromCurrencyName+"/"+forex.toCurrencyName}>
+            <ListItem
+                key={forex.fromCurrencyName+"/"+forex.toCurrencyName}
+                onClick={()=> setForex(forex.fromCurrencySymbol+"/"+forex.toCurrencySymbol)}
+            >
                 <ListItemAvatar>
                     <Avatar>
                         <Icon icon={cashUsdOutline} width="20px" height="20px" />
@@ -62,7 +68,10 @@ const SearchPage =
         ));
 
         const foundCryptoList = foundCrypto.map(crypto => (
-            <ListItem key={crypto.fromCurrencyName+"/"+crypto.toCurrencyName}>
+            <ListItem
+                key={crypto.fromCurrencyName+"/"+crypto.toCurrencyName}
+                onClick={()=> setCrypto(crypto.fromCurrencySymbol+"/"+crypto.toCurrencySymbol)}
+            >
                 <ListItemAvatar>
                     <Avatar>
                         <Icon icon={bitcoinIcon} width="20px" height="20px" />
@@ -113,11 +122,14 @@ const SearchPage =
 SearchPage.propTypes = {
     keyword: PropTypes.string.isRequired,
     searchResult: PropTypes.object.isRequired,
-    searchCounter: PropTypes.number.isRequired
+    searchCounter: PropTypes.number.isRequired,
+    setStock: PropTypes.func.isRequired,
+    setForex: PropTypes.func.isRequired,
+    setCrypto: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     searchResult: state.searchResult
-})
+});
 
 export default connect(mapStateToProps,{findItems})(SearchPage);

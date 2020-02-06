@@ -123,6 +123,7 @@ const Dashboard = (
         getStock(stockName);
         setSelectedItem('stock');
         setItemSelected(true);
+        setSearchPage(false)
     };
 
     const setCurrentForex = (forexExchange) => {
@@ -130,6 +131,7 @@ const Dashboard = (
         getForex(forexExchange);
         setSelectedItem('forex');
         setItemSelected(true)
+        setSearchPage(false)
     };
 
     const setCurrentCrypto = (cryptoName) => {
@@ -137,6 +139,7 @@ const Dashboard = (
         getCrypto(cryptoName);
         setSelectedItem('crypto');
         setItemSelected(true)
+        setSearchPage(false)
     };
 
     console.log(user);
@@ -151,6 +154,9 @@ const Dashboard = (
             return (<SearchPage
                 keyword={keyWord}
                 searchCounter={searchCounter}
+                setStock={setCurrentStock}
+                setForex={setCurrentForex}
+                setCrypto={setCurrentCrypto}
             />)
     }
 

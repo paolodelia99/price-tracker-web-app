@@ -161,7 +161,7 @@ const CryptoItem =
                         <MenuItem value={'candlestick'}>CandleStick</MenuItem>
                     </Select>
                 </FormControl>
-                {exchangeRate ? <ListItem className='crypto-info'>
+                {exchangeRate ? <ListItem className='financial-item-info'>
                     <ListItemAvatar>
                         <Avatar>
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />
@@ -169,7 +169,7 @@ const CryptoItem =
                     </ListItemAvatar>
                     <ListItemText primary="Exchange Rate" secondary={exchangeRate} />
                 </ListItem> : null}
-                {volume24Hour ? <ListItem className='crypto-info'>
+                {volume24Hour ? <ListItem className='financial-item-info'>
                     <ListItemAvatar>
                         <Avatar>
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />
@@ -177,7 +177,7 @@ const CryptoItem =
                     </ListItemAvatar>
                     <ListItemText primary="Volume (24h)" secondary={volume24Hour} />
                 </ListItem> : null}
-               {change24Hour ? <ListItem className='crypto-info'>
+               {change24Hour ? <ListItem className='financial-item-info'>
                     <ListItemAvatar>
                         <Avatar>
                             <Icon icon={cashUsdOutline} width="20px" height="20px" />

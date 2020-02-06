@@ -4,6 +4,7 @@ const request = require('request');
 const config = require('config');
 const apiKey = config.get('ALPHA_API_KEY');
 const apiKey2 = config.get('ALPHA_API_KEY_2');
+const worldTradeApiKey = config.get('WORLD_TRADE_API_KEY');
 
 // @route    GET api/stock/getStock/:time_frame/:stock_name
 // @desc     get price of a stock based on the requested timeframe
@@ -60,6 +61,25 @@ router.get('/getStock2/:time_frame/:stock_name',async (req,res)=>{
         res.status(500).send('Server Error');
     }
 });
+
+// @route    GET api/stock/getStockInfo/:stock_name
+// @desc     search endpoint
+// @access   Public
+router.get('/getStockInfo/:stock_name', async (req,res)=>{
+    try {
+        await request(`https://api.worldtradingdata.com/api/v1/stock?symbol=${req.params.stock_name}&api_token=${worldTradeApiKey}`,
+            (err,response,body)=> {
+            const content = JSON.parse(body);
+
+            res.json(content)
+            })
+    }catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+});
+
 
 // @route    GET api/stock/search/:stock_name
 // @desc     search endpoint

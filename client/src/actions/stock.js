@@ -1,7 +1,8 @@
 import {
     GET_STOCK,
     TAKE_OUT_STOCK,
-    UPDATE_STOCK
+    UPDATE_STOCK,
+    GET_STOCK_INFO
 } from "./types";
 import axios from 'axios';
 import {setAlert} from "./alert";
@@ -11,7 +12,6 @@ let dispatchAction = false;
 //default timeFrame daily-adjusted
 export const getStock = (stockName) => async dispatch => {
     try {
-        let currentStockName = stockName;
         let res = await axios.get(`/api/stock/getStock/daily/${stockName}`);
 
         let data = res.data;
@@ -47,9 +47,9 @@ export const getStock = (stockName) => async dispatch => {
             chartHighValues: stockChartHighValuesFunction,
             chartLowValues: stockChartLowValuesFunction,
             chartVolumeValues: stockChartVolumeValuesFunction
-        }
+        };
 
-        currentStockName = ''
+        dispatch(getStockInfo(stockName));
         dispatch({
             type: GET_STOCK,
             payload: stockData
@@ -58,6 +58,30 @@ export const getStock = (stockName) => async dispatch => {
         dispatch(setAlert('Stock not found','alert-danger'))
     }
 };
+
+//get Stock info
+const getStockInfo = (stockName) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/stock/getStockInfo/${stockName}`);
+
+        let data = res.data;
+
+        const stockInfo = {
+            stockFullName: data['data'][0]['name'],
+            stockCurrentPrice: data['data'][0]['price'],
+            stockDayChange: data['data'][0]['day_change'],
+            stockMarketCup: data['data'][0]['market_cap'],
+            stockNumbersOfShare: data['data'][0]['shares'],
+        };
+
+        dispatch({
+            type: GET_STOCK_INFO,
+            payload: stockInfo
+        })
+    }catch (err) {
+
+    }
+}
 
 //second api call
 const getStock2 = async (stockName) =>  {

@@ -122,6 +122,14 @@ body{
   justify-content: center;
 }
 
+/*Stock Item*/
+.stock-full-name-container{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /*MEDIA QUERIES*/
 @media screen and (min-width: 240px) and (max-width: 375px) {
   .selected-container{
@@ -139,8 +147,16 @@ body{
     justify-content: center;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
@@ -169,8 +185,16 @@ body{
     justify-content: center;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
@@ -198,8 +222,16 @@ body{
     justify-content: center;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
@@ -227,8 +259,16 @@ body{
     justify-content: center;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
@@ -256,8 +296,16 @@ body{
     justify-content: center;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
@@ -286,7 +334,7 @@ body{
     flex-wrap: wrap;
   }
 
-  .crypto-info{
+  .financial-item-info{
     flex-basis: 27%;
   }
 
@@ -295,6 +343,14 @@ body{
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: center;
+  }
+
+  #stock-type-of-chart-form-control{
+    flex-basis: 35%;
+  }
+
+  #stock-timeframe-form-control{
+    flex-basis: 35%;
   }
 
   #timeframe-form-control{
