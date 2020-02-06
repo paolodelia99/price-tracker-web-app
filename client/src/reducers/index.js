@@ -5,7 +5,7 @@ import alert from "./alert";
 import stock from "./stock";
 import forex from "./forex";
 import crypto from "./crypto";
-import apiCallCounter from "./apiCallCounter";
+import searchResult from "./searchResult";
 
 export default combineReducers({
     auth,
@@ -14,5 +14,5 @@ export default combineReducers({
     stock,
     forex,
     crypto,
-    apiCallCounter
+    searchResult
 })

@@ -44,7 +44,6 @@ import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
 import {takeOutEveryThing} from "../../actions/profile";
 import InputBase from "@material-ui/core/InputBase";
-import apiCallCounter from "../../reducers/apiCallCounter";
 import Alert from "../Layout/Alert";
 import Paper from "@material-ui/core/Paper";
 import SearchPage from "./SearchPage";
@@ -54,7 +53,6 @@ const Dashboard = (
         logout,
         auth: {user},
         profile :{profile,loading,stocksCollection,forexCollection,cryptoCollection},
-        apiCallCounter: {counter},
         getCurrentProfile,
         getStock,
         getForex,
@@ -74,6 +72,7 @@ const Dashboard = (
     const [openSearchPage,setSearchPage] = useState(false);
     const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
+    const [searchCounter,setSearchCounter] = useState(0);
 
     const firstUpdate = useRef(true);
     useLayoutEffect(() => {
@@ -83,6 +82,11 @@ const Dashboard = (
         }
 
     },[]);
+
+    //loggo la key word per verificare che cambia
+    useEffect(()=>{
+        console.log(keyWord)
+    },[keyWord]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -100,15 +104,19 @@ const Dashboard = (
     };
 
     const setSearchPageOpen = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         console.log('open search Page');
         setSearchPage(true);
-        //todo: vedi come posso passare le props a search page component
+        setSearchCounter(searchCounter => searchCounter +1)
     };
 
     const closeSearchPage = () =>{
         setSearchPage(false)
-    }
+    };
+
+    const setWordToSearch = (e) => {
+        setKeyWord(e.target.value)
+    };
 
     const setCurrentStock = (stockName) => {
         takeOutEveryThing();
@@ -140,7 +148,10 @@ const Dashboard = (
         else if(!isItemSelected && !openSearchPage)
             return (<InitialPage/>)
         else
-            return (<SearchPage/>)
+            return (<SearchPage
+                keyword={keyWord}
+                searchCounter={searchCounter}
+            />)
     }
 
     return loading && profile === null ? (
@@ -178,6 +189,8 @@ const Dashboard = (
                             <Paper component="form" className={searchBarClasses.root}>
                                 <InputBase
                                     className={searchBarClasses.input}
+                                    value={keyWord}
+                                    onChange={e => setWordToSearch(e)}
                                     placeholder="Search"
                                     inputProps={{ 'aria-label': 'search google maps' }}
                                 />
@@ -285,7 +298,6 @@ Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
-    apiCallCounter: PropTypes.object.isRequired,
     getStock: PropTypes.func.isRequired,
     getForex: PropTypes.func.isRequired,
     getCrypto: PropTypes.func.isRequired,
@@ -297,7 +309,6 @@ Dashboard.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth,
     profile: state.profile,
-    apiCallCounter: state.apiCallCounter
 });
 
 export default connect(
