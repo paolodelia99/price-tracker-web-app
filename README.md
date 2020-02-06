@@ -19,7 +19,8 @@ Tools that I've used to build this app:
 - [Material-UI](https://material-ui.com/) - as a React UI framework (also to make more similar to the real Google Keep)
 - [Alpha Vantage](https://www.alphavantage.co/) - for getting the stock, forex and crypto data
 - [Plot.ly](https://plot.ly/) - for displaying the charts
-
+- [World Trading Data](https://www.worldtradingdata.com/)- as a API for getting stock info
+- [Crypto Compare](https://www.cryptocompare.com/) - as a API for getting crypto info
 ## Quick Start: how to install it
 
 ```bash

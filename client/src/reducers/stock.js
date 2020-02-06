@@ -39,6 +39,11 @@ export default function (state=initialState,action) {
             return {
                 ...state,
                 stock: null,
+                stockFullName: null,
+                marketCap: null,
+                currentPrice: null,
+                dayChange: null,
+                numbersShares: null,
                 loading: true
             };
         default:
