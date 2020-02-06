@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {loginStyle} from '../styles/loginStyle'
 import AppNavbar from '../Layout/AppNavbar';
+import Alert from "../Layout/Alert";
 
 const Login = ({login,isAuthenticated}) => {
     const classes = loginStyle();
@@ -41,6 +42,7 @@ const Login = ({login,isAuthenticated}) => {
 
     return(
         <Fragment>
+            <Alert isFormDashBoard={false}/>
             <AppNavbar/>
             <ThemeProvider theme={landingTheme}>
                 <Container component="main" maxWidth="xs">

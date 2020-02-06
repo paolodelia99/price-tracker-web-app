@@ -16,6 +16,7 @@ import { registerStyle } from '../styles/registerStyle';
 import { ThemeProvider } from '@material-ui/styles';
 import {landingTheme} from "../styles/landingTheme";
 import AppNavbar from '../Layout/AppNavbar';
+import Alert from "../Layout/Alert";
 
 const Register = ({setAlert, register, isAuthenticated}) => {
     const classes = registerStyle();
@@ -47,6 +48,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
 
     return (
         <Fragment>
+            <Alert isFormDashBoard={false}/>
             <AppNavbar/>
             <ThemeProvider theme={landingTheme}>
                 <Container component="main" maxWidth="xs">

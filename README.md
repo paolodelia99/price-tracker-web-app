@@ -21,6 +21,7 @@ Tools that I've used to build this app:
 - [Plot.ly](https://plot.ly/) - for displaying the charts
 - [World Trading Data](https://www.worldtradingdata.com/)- as a API for getting stock info
 - [Crypto Compare](https://www.cryptocompare.com/) - as a API for getting crypto info
+
 ## Quick Start: how to install it
 
 ```bash
@@ -49,4 +50,61 @@ npm run build
 # add your alpha vantage api key (which is free)
 
  "ALPHA_API_KEY": "your-api-key"
+
+# add your Crypto compare api kei ( I use this api key for getting the crypto info such as volume24h, change%,
+...)
+
+ "CRYPTO_API_KEY": "your-crypto-compare-api-key"
+
+# add you World trade api 
+
+ "WORLD_TRADE_API_KEY": "your-world-trade-api"
 ```
+
+## Folder Structure
+
+For the folder structure I've done in this way: 
+
+```
+.
+├── README.md
+├── package-lock.json
+├── package.json
+├── client
+├── config
+├── middleware
+├── models
+│   ├── Profile.js
+│   └── User.js
+└── routes
+│    └── api
+│         ├──  auth.js
+│         ├──  crypto.js
+│         ├──  forex.js
+│         ├──  profile.js
+│         ├──  stock.js
+│         └──  user.js
+├── .env
+├── .gitingnore
+└── server.js
+```
+I'll show you the client folder structure later, when I'll talk about the front-end
+
+## Backend
+
+For the backend I've imported the following packages from npm: 
+
+- create-react-app: for creating the react app in the client folder
+- bcryptjs: for hashing the user passwords
+- config: for managing the configurations file
+- jsonwebtoken: for creating JSON-based access tokens
+- request: for making http calls to the external apis
+- express: as a backend framework
+- mongoose: as a Object Data Modeling library for MongoDB and Node.js
+ <br/>
+ <br/>
+ And as the devs dependencies I've used: 
+ - concurrently: for running the server and the client at the same time, without having two terminal opened at the same time
+- nodemon: a utility that will monitor for any changes in your source and automatically restart your server
+
+---

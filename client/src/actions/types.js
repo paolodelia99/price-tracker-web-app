@@ -17,6 +17,7 @@ export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const GET_STOCK = 'GET_STOCK';
 export const GET_STOCK_INFO = 'GET_STOCK_INFO';
 export const GET_FOREX = 'GET_FOREX';
+export const GET_FOREX_EXCHANGE_FULL_NAMES = 'GET_FOREX_EXCHANGE_FULL_NAMES';
 export const GET_CRYPTO = 'GET_CRYPTO';
 export const UPDATE_STOCK = 'UPDATE_STOCK';
 export const UPDATE_FOREX = 'UPDATE_FOREX';

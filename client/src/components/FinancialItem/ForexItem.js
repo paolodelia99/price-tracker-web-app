@@ -22,8 +22,19 @@ import {updateForex} from '../../actions/forex';
 import {connect} from 'react-redux';
 import {addNewForex} from "../../actions/profile";
 import PropTypes from 'prop-types';
+import financeIcon from "@iconify/icons-mdi/finance";
 
-const ForexItem = ({forex: {forex,exchangeRate,loading},profile:{forexCollection},addNewForex,updateForex}) => {
+const ForexItem = (
+    {
+        forex: {
+            forex,
+            exchangeRate,
+            fromCurrencyFullName,
+            toCurrencyFullName,
+            loading},
+        profile:{forexCollection},
+        addNewForex,
+        updateForex}) => {
     const classes = selectStyle();
     const [timeFrame,setTimeFrame] = useState('daily');
     const [typeOfChart,setTypeOfChart] = useState('line');
@@ -86,6 +97,24 @@ const ForexItem = ({forex: {forex,exchangeRate,loading},profile:{forexCollection
         <Spinner/>
     ) : (
         <div className='financial-instrument-container'>
+            <div className="forex-and-crypto-full-names-container">
+                {fromCurrencyFullName ? <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={fromCurrencyFullName} />
+                </ListItem> : null}
+                {toCurrencyFullName ? <ListItem>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <Icon icon={cashUsdOutline} width="20px" height="20px" />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={toCurrencyFullName} />
+                </ListItem> : null}
+            </div>
             <div>
                 {displayTheRightPlot()}
             </div>

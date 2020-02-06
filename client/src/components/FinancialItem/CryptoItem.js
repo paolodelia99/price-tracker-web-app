@@ -99,7 +99,7 @@ const CryptoItem =
         <Spinner/>
     ) : (
         <div className='financial-instrument-container'>
-            <div className="crypto-full-name-container">
+            <div className="forex-and-crypto-full-names-container">
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>

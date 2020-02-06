@@ -100,15 +100,15 @@ const StockItem = (
         <Spinner/>
     ) : (
         <div className='financial-instrument-container'>
-            <div className="stock-full-name-container">
-                <ListItem>
+            <div className="stock-full-name-container full-name-container">
+                {stockFullName ? <ListItem>
                     <ListItemAvatar>
                         <Avatar>
                             <Icon icon={financeIcon} width="20px" height="20px" />
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={stockFullName} />
-                </ListItem>
+                </ListItem> : null}
             </div>
             <div>
                 {displayTheRightPlot()}

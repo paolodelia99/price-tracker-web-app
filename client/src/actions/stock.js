@@ -147,9 +147,11 @@ export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
 
         let data = res.data;
         console.log(data.hasOwnProperty('Note'))
-        if(data.hasOwnProperty('Note')){
-            data = changeStockTimeFrame2(stockName,timeFrame)
-        }
+        if(data.hasOwnProperty('Note'))
+            dispatch(setAlert('You\'ve reached the maximun API call for minute','danger'))
+        else if(data.hasOwnProperty('Error Message'))
+            dispatch(setAlert('Stock not found','alert-danger'))
+
 
         console.log(data);
 
@@ -180,7 +182,9 @@ export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
             chartHighValues: stockChartHighValuesFunction,
             chartLowValues: stockChartLowValuesFunction,
             chartVolumeValues: stockChartVolumeValuesFunction
-        }
+        };
+
+        dispatch(getStockInfo(stockName));
 
         dispatch({
             type: UPDATE_STOCK,

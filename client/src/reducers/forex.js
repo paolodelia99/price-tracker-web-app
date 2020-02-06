@@ -2,11 +2,14 @@ import {
     GET_FOREX,
     TAKE_OUT_FOREX,
     UPDATE_FOREX,
-    SET_FOREX_EXCHANGE_RATE
+    SET_FOREX_EXCHANGE_RATE,
+    GET_FOREX_EXCHANGE_FULL_NAMES
 } from "../actions/types";
 
 const initialState = {
     forex: null,
+    fromCurrencyFullName: null,
+    toCurrencyFullName: null,
     exchangeRate: null,
     loading: true
 };
@@ -22,6 +25,12 @@ export default function (state=initialState,action) {
                 forex: payload,
                 loading: false
             };
+        case GET_FOREX_EXCHANGE_FULL_NAMES:
+            return {
+                ...state,
+                fromCurrencyFullName: payload.fromCurrencyFullName,
+                toCurrencyFullName: payload.toCurrencyFullName
+            }
         case SET_FOREX_EXCHANGE_RATE:
             return {
                 ...state,
@@ -31,6 +40,9 @@ export default function (state=initialState,action) {
             return {
                 ...state,
                 forex: null,
+                fromCurrencyFullName: null,
+                toCurrencyFullName: null,
+                exchangeRate: null,
                 loading: true
             };
         default:

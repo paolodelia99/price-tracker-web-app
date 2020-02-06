@@ -63,16 +63,27 @@ export const searchForex = (keyword) => dispatch => {
         }
     }
 
+    let exchangeFound = [];
+
     if(itemsFound.length === 0){
-        dispatch({
-            type: GET_FOUND_FOREX,
-            payload: []
-        })
+        //Do Nothing
+    }else if(itemsFound.length === 1){
+
+        let randomIndexesArray = getFiveRandomIndexes(forexListLength);
+
+        for(let i=0;i<randomIndexesArray.length;i++){
+            exchangeFound.push({
+                fromCurrencySymbol: itemsFound[0].currencyCode,
+                fromCurrencyName: itemsFound[0].currencyName,
+                toCurrencySymbol: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency code'],
+                toCurrencyName: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency name']
+            })
+        }
+
     }else{
-        let exchangeFound = [];
 
         for(let key in itemsFound){
-            let randomIndex = (Math.floor(Math.random() *forexListLength)+1);
+            let randomIndex = Math.floor(Math.random() *forexListLength);
 
             exchangeFound.push({
                 fromCurrencySymbol: itemsFound[key].currencyCode,
@@ -81,13 +92,28 @@ export const searchForex = (keyword) => dispatch => {
                 toCurrencyName: forexList.physicalCurrencyList[randomIndex]['currency name']
             })
         }
-
-        dispatch({
-            type: GET_FOUND_FOREX,
-            payload: exchangeFound
-        })
     }
+
+    dispatch({
+        type: GET_FOUND_FOREX,
+        payload: exchangeFound
+    })
 };
+
+//get five random indexes when one item is found
+const getFiveRandomIndexes = (maxLength) => {
+    const randomIndexesArray = [];
+    //get five random indexes
+    for(let i=0;i<5;i++){
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * maxLength);
+        }while (randomIndexesArray.includes(randomIndex));
+        randomIndexesArray.push(randomIndex)
+    }
+
+    return randomIndexesArray;
+}
 
 //Exchange Crypto
 export const searchCrypto = (keyword) => dispatch => {
@@ -106,17 +132,27 @@ export const searchCrypto = (keyword) => dispatch => {
         }
     }
 
+    let cryptoExchangeFound = [];
 
     if(itemsFound.length === 0){
-        dispatch({
-            type: GET_FOUND_CRYPTO,
-            payload: []
-        })
+        //Do nothing
+    }else if(itemsFound.length === 1){
+
+        const randomIndexesArray = getFiveRandomIndexes(marketListLength);
+
+        for(let i=0;i<randomIndexesArray.length;i++){
+            cryptoExchangeFound.push({
+                fromCurrencySymbol: itemsFound[0].currencyCode,
+                fromCurrencyName: itemsFound[0].currencyName,
+                toCurrencySymbol: marketList.popularMarket[randomIndexesArray[i]]['currency code'],
+                toCurrencyName: marketList.popularMarket[randomIndexesArray[i]]['currency name']
+            })
+        }
+
     }else{
-        let cryptoExchangeFound = [];
 
         for(let key in itemsFound){
-            let randomIndex = (Math.floor(Math.random() * marketListLength)+1);
+            let randomIndex = Math.floor(Math.random() * marketListLength);
 
             cryptoExchangeFound.push({
                 fromCurrencySymbol: itemsFound[key].currencyCode,
@@ -125,12 +161,12 @@ export const searchCrypto = (keyword) => dispatch => {
                 toCurrencyName: marketList.popularMarket[randomIndex]['currency name']
             })
         }
-
-        dispatch({
-            type: GET_FOUND_CRYPTO,
-            payload: cryptoExchangeFound
-        })
     }
+
+    dispatch({
+        type: GET_FOUND_CRYPTO,
+        payload: cryptoExchangeFound
+    })
 };
 
 //get search word function for cryptos and forex

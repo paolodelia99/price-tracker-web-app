@@ -47,6 +47,9 @@ import InputBase from "@material-ui/core/InputBase";
 import Alert from "../Layout/Alert";
 import Paper from "@material-ui/core/Paper";
 import SearchPage from "./SearchPage";
+import {AccountCircle} from "@material-ui/icons";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 const Dashboard = (
     {
@@ -73,8 +76,11 @@ const Dashboard = (
     const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
     const [searchCounter,setSearchCounter] = useState(0);
-
+    const [anchorEl, setAnchorEl] = useState(null); //for profile menu
+    const isMenuOpen = Boolean(anchorEl);
+    const menuId = 'primary-search-account-menu';
     const firstUpdate = useRef(true);
+
     useLayoutEffect(() => {
         if (firstUpdate.current) {
             firstUpdate.current = false;
@@ -83,67 +89,85 @@ const Dashboard = (
 
     },[]);
 
-    //loggo la key word per verificare che cambia
-    useEffect(()=>{
-        console.log(keyWord)
-    },[keyWord]);
+    const handleProfileMenuOpen = event => {
+        setAnchorEl(event.currentTarget);
 
+    };
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
-    };
 
+    };
     const handleDrawerClose = () => {
         setOpen(false);
-    };
 
+    };
     const removeItem = () => {
         removeSelectedItem();
         closeSearchPage();
         setItemSelected(false);
         return (<Redirect  to="/dashboard" />)
-    };
 
+    };
     const setSearchPageOpen = (e) => {
         e.preventDefault();
         console.log('open search Page');
         setSearchPage(true);
         setSearchCounter(searchCounter => searchCounter +1)
-    };
 
+    };
     const closeSearchPage = () =>{
         setSearchPage(false)
-    };
 
+    };
     const setWordToSearch = (e) => {
         setKeyWord(e.target.value)
-    };
 
+    };
     const setCurrentStock = (stockName) => {
         takeOutEveryThing();
         getStock(stockName);
         setSelectedItem('stock');
         setItemSelected(true);
         setSearchPage(false)
-    };
 
+    };
     const setCurrentForex = (forexExchange) => {
         takeOutEveryThing();
         getForex(forexExchange);
         setSelectedItem('forex');
         setItemSelected(true)
         setSearchPage(false)
-    };
 
+    };
     const setCurrentCrypto = (cryptoName) => {
         takeOutEveryThing();
         getCrypto(cryptoName);
         setSelectedItem('crypto');
         setItemSelected(true)
         setSearchPage(false)
-    };
 
+    };
     console.log(user);
+
     console.log(profile);
+
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>{profile ? (profile.user.firstName+" "+ profile.user.lastName) : null}</MenuItem>
+        </Menu>
+    );
 
     const displayTheRightComponent = () => {
         if(isItemSelected && !openSearchPage)
@@ -158,7 +182,7 @@ const Dashboard = (
                 setForex={setCurrentForex}
                 setCrypto={setCurrentCrypto}
             />)
-    }
+    };
 
     return loading && profile === null ? (
         <Spinner/>
@@ -207,12 +231,24 @@ const Dashboard = (
                             </Paper>
                         </div>
                         <div className={classes.grow} />
+                        <IconButton
+                            style={{margin: "0px 3px"}}
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
                         <Fragment>
                             <NavLink to='#!' onClick={logout} className='link'>
                                 <Button color='inherit' >Logout</Button>
                             </NavLink>
                         </Fragment>
                     </Toolbar>
+                    {renderMenu}
                 </AppBar>
                 <Drawer
                     className={classes.drawer}
@@ -288,7 +324,8 @@ const Dashboard = (
                         [classes.contentShift]: open,
                     })}
                 >
-                    <Alert/>
+                    <br/>
+                    <Alert isFormDashBoard={true}/>
                     <div className={classes.drawerHeader} />
                     <div>
                         {displayTheRightComponent()}
