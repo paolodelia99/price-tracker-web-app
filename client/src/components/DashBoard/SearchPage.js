@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import {findItems} from "../../actions/searchResult";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Divider from "@material-ui/core/Divider";
 
 const SearchPage =
     ({keyword,
@@ -40,7 +41,7 @@ const SearchPage =
 
 
         const foundStocksList = foundStocks.map(stock => (
-            <ListItem key={stock.stockFullName} onClick={()=> setStock(stock.stockSymbol)}>
+            <ListItem key={stock.stockSymbol} onClick={()=> setStock(stock.stockSymbol)} className='fin-list-item'>
                 <ListItemAvatar>
                     <Avatar>
                         <Icon icon={financeIcon} width="20px" height="20px" />
@@ -54,6 +55,7 @@ const SearchPage =
             <ListItem
                 key={forex.fromCurrencyName+"/"+forex.toCurrencyName}
                 onClick={()=> setForex(forex.fromCurrencySymbol+"/"+forex.toCurrencySymbol)}
+                className='fin-list-item'
             >
                 <ListItemAvatar>
                     <Avatar>
@@ -71,6 +73,7 @@ const SearchPage =
             <ListItem
                 key={crypto.fromCurrencyName+"/"+crypto.toCurrencyName}
                 onClick={()=> setCrypto(crypto.fromCurrencySymbol+"/"+crypto.toCurrencySymbol)}
+                className='fin-list-item'
             >
                 <ListItemAvatar>
                     <Avatar>
@@ -85,33 +88,33 @@ const SearchPage =
         ))
 
         const stocksFound = foundStocks.length !== 0 ?
-            (<List>{foundStocksList}</List>): (<Typography>No Stocks Found</Typography>);
+            (<List>{foundStocksList}</List>): (<p className='nothing-found-text'>No Stocks Found</p>);
 
         const forexFound = foundForex.length !== 0 ?
-            (<List>{foundForexList}</List>) : (<Typography>No Forex Found</Typography>)
+            (<List>{foundForexList}</List>) : (<p className='nothing-found-text'>No Forex Found</p>)
 
         const cryptoFound = foundCrypto.length !== 0 ?
-            (<List>{foundCryptoList}</List>) : (<Typography>No Crypto Found</Typography>)
+            (<List>{foundCryptoList}</List>) : (<p className='nothing-found-text'>No Crypto Found</p>)
 
         return (
         <div>
             <div className="found-items-container">
                 <div>
-                    <Typography className='found-item-title'>
+                    <p className='found-item-title'>
                         Stocks found:
-                    </Typography>
+                    </p>
                     {stockLoading ? (<Spinner/>): stocksFound}
                 </div>
                 <div>
-                    <Typography>
+                    <p className='found-item-title'>
                         Forex found:
-                    </Typography>
+                    </p>
                     {forexLoading ? (<Spinner/>): forexFound}
                 </div>
                 <div>
-                    <Typography>
+                    <p className='found-item-title'>
                         Crypto found:
-                    </Typography>
+                    </p>
                     {cryptoLoading ? (<Spinner/>): cryptoFound}
                 </div>
             </div>

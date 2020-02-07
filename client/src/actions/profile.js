@@ -6,10 +6,12 @@ import {takeOutCrypto} from "./crypto";
 import {
     GET_PROFILE,
     PROFILE_ERROR,
-    UPDATE_PROFILE,
-    CLEAR_PROFILE,
     SET_SELECTED_ITEM,
-    REMOVE_SELECTED_ITEM, ADD_STOCK, ADD_FOREX, ADD_CRYPTO,
+    REMOVE_SELECTED_ITEM,
+    ADD_STOCK,
+    ADD_FOREX,
+    ADD_CRYPTO,
+    GET_FINANCIAL_DATA, DELETE_STOCK, DELETE_FOREX, DELETE_CRYPTO,
 } from './types';
 
 // Get current users profile
@@ -17,9 +19,22 @@ export const getCurrentProfile = () => async dispatch => {
     try {
         const res = await axios.get('/api/profile/me');
 
+        const finData = {
+            stocks: res.data.stocks,
+            forex: res.data.forex,
+            crypto: res.data.crypto
+        };
+
+        const profileData = {
+            _id: res.data._id,
+            user: res.data.user
+        };
+
+        dispatch(getFinancialData(finData));
+
         dispatch({
             type: GET_PROFILE,
-            payload: res.data
+            payload: profileData
         });
     } catch (err) {
         dispatch({
@@ -27,6 +42,13 @@ export const getCurrentProfile = () => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
+};
+
+const getFinancialData = (finData) => dispatch => {
+    dispatch({
+        type: GET_FINANCIAL_DATA,
+        payload: finData
+    })
 };
 
 export const setSelectedItem = (itemType) => dispatch => {
@@ -119,6 +141,49 @@ export const addNewCrypto = (newCrypto) => async dispatch => {
     }
 };
 
+//Delete stock
+export const deleteStock = (id) => async dispatch => {
+    try {
+        await axios.delete(`api/profile/deleteStock/${id}`)
+
+        dispatch({
+            type: DELETE_STOCK,
+            payload: id
+        })
+
+    }catch (err) {//todo: ad gestire gli errori con opportuno reducer
+        console.log(err)
+    }
+};
+
+//Delete forex
+export const deleteForex = (id) => async dispatch => {
+    try {
+        await axios.delete(`api/profile/deleteForex/${id}`)
+
+        dispatch({
+            type: DELETE_FOREX,
+            payload: id
+        })
+
+    }catch (err) {//todo: ad gestire gli errori con opportuno reducer
+        console.log(err)
+    }
+};
+
+//Delete crypto
+export const deleteCrypto = (id) => async dispatch => {
+    try {
+        await axios.delete(`api/profile/deleteCrypto/${id}`)
+
+        dispatch({
+            type: DELETE_CRYPTO,
+            payload: id
+        })
+    }catch (err) {//todo: ad gestire gli errori con opportuno reducer
+        console.log(err)
+    }
+};
 
 export const removeSelectedItem = () => dispatch => {
     dispatch({

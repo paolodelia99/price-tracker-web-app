@@ -19,7 +19,7 @@ export const getStock = (stockName) => async dispatch => {
         if(data.hasOwnProperty('Note'))
             dispatch(setAlert('You\'ve reached the maximun API call for minute','danger'))
         else if(data.hasOwnProperty('Error Message'))
-            dispatch(setAlert('Stock not found','alert-danger'))
+            dispatch(setAlert('Stock not found','danger'))
 
         console.log(data);
 
@@ -55,7 +55,7 @@ export const getStock = (stockName) => async dispatch => {
             payload: stockData
         })
     }catch (err) {
-        dispatch(setAlert('Stock not found','alert-danger'))
+        dispatch(setAlert('Stock not found','danger'))
     }
 };
 
@@ -150,7 +150,7 @@ export const changeStockTimeFrame = (stockName,timeFrame) => async dispatch => {
         if(data.hasOwnProperty('Note'))
             dispatch(setAlert('You\'ve reached the maximun API call for minute','danger'))
         else if(data.hasOwnProperty('Error Message'))
-            dispatch(setAlert('Stock not found','alert-danger'))
+            dispatch(setAlert('Stock not found','danger'))
 
 
         console.log(data);

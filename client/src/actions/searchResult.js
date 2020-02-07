@@ -64,12 +64,11 @@ export const searchForex = (keyword) => dispatch => {
     }
 
     let exchangeFound = [];
+    let randomIndexesArray = getFiveRandomIndexes(forexListLength);
 
     if(itemsFound.length === 0){
         //Do Nothing
     }else if(itemsFound.length === 1){
-
-        let randomIndexesArray = getFiveRandomIndexes(forexListLength);
 
         for(let i=0;i<randomIndexesArray.length;i++){
             exchangeFound.push({
@@ -80,10 +79,34 @@ export const searchForex = (keyword) => dispatch => {
             })
         }
 
+    }else if(itemsFound.length === 2){
+
+        for(let i=0;i<randomIndexesArray.length;i++){
+            if(i%2 === 0)
+                exchangeFound.push({
+                    fromCurrencySymbol: itemsFound[0].currencyCode,
+                    fromCurrencyName: itemsFound[0].currencyName,
+                    toCurrencySymbol: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency code'],
+                    toCurrencyName: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency name']
+                });
+            else
+                exchangeFound.push({
+                    fromCurrencySymbol: itemsFound[1].currencyCode,
+                    fromCurrencyName: itemsFound[1].currencyName,
+                    toCurrencySymbol: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency code'],
+                    toCurrencyName: forexList.physicalCurrencyList[randomIndexesArray[i]]['currency name']
+                })
+        }
+
     }else{
 
         for(let key in itemsFound){
-            let randomIndex = Math.floor(Math.random() *forexListLength);
+
+            let randomIndex;
+
+            do {
+                randomIndex = Math.floor(Math.random() *forexListLength);
+            }while(itemsFound[key].currencyCode === forexList.physicalCurrencyList[randomIndex]['currency code']);
 
             exchangeFound.push({
                 fromCurrencySymbol: itemsFound[key].currencyCode,
@@ -113,7 +136,7 @@ const getFiveRandomIndexes = (maxLength) => {
     }
 
     return randomIndexesArray;
-}
+};
 
 //Exchange Crypto
 export const searchCrypto = (keyword) => dispatch => {
@@ -133,12 +156,11 @@ export const searchCrypto = (keyword) => dispatch => {
     }
 
     let cryptoExchangeFound = [];
+    const randomIndexesArray = getFiveRandomIndexes(marketListLength);
 
     if(itemsFound.length === 0){
         //Do nothing
     }else if(itemsFound.length === 1){
-
-        const randomIndexesArray = getFiveRandomIndexes(marketListLength);
 
         for(let i=0;i<randomIndexesArray.length;i++){
             cryptoExchangeFound.push({
@@ -147,6 +169,25 @@ export const searchCrypto = (keyword) => dispatch => {
                 toCurrencySymbol: marketList.popularMarket[randomIndexesArray[i]]['currency code'],
                 toCurrencyName: marketList.popularMarket[randomIndexesArray[i]]['currency name']
             })
+        }
+
+    }else if(itemsFound.length === 2){
+
+        for(let i=0;i<randomIndexesArray.length;i++){
+            if(i%2 === 0)
+                cryptoExchangeFound.push({
+                    fromCurrencySymbol: itemsFound[0].currencyCode,
+                    fromCurrencyName: itemsFound[0].currencyName,
+                    toCurrencySymbol: marketList.popularMarket[randomIndexesArray[i]]['currency code'],
+                    toCurrencyName: marketList.popularMarket[randomIndexesArray[i]]['currency name']
+                });
+            else
+                cryptoExchangeFound.push({
+                    fromCurrencySymbol: itemsFound[1].currencyCode,
+                    fromCurrencyName: itemsFound[1].currencyName,
+                    toCurrencySymbol: marketList.popularMarket[randomIndexesArray[i]]['currency code'],
+                    toCurrencyName: marketList.popularMarket[randomIndexesArray[i]]['currency name']
+                })
         }
 
     }else{
@@ -177,4 +218,4 @@ const getSearchWord = (keyword) => {
         searchWord= keyword.substring(0,2);
 
     return searchWord.toUpperCase();
-}
+};

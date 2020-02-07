@@ -22,10 +22,14 @@ import {dashboardStyle} from '../styles/dashboardStyle'
 import {landingTheme} from "../styles/landingTheme";
 import {NavLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 import {searchBarStyle} from '../styles/searchBarStyle'
 //Other components imports
 import SelectedItem from "./SelectedItem";
 import InitialPage from "./InitialPage";
+import Alert from "../Layout/Alert";
+import SearchPage from "./SearchPage";
 import Spinner from "../Layout/Spinner";
 import {InitialDashboardButton} from '../Layout/initialDashboardButton'
 //Icon
@@ -43,13 +47,9 @@ import {getCrypto} from "../../actions/crypto";
 import {setSelectedItem, removeSelectedItem} from '../../actions/profile';
 import {getCurrentProfile} from "../../actions/profile";
 import {takeOutEveryThing} from "../../actions/profile";
-import InputBase from "@material-ui/core/InputBase";
-import Alert from "../Layout/Alert";
-import Paper from "@material-ui/core/Paper";
-import SearchPage from "./SearchPage";
-import {AccountCircle} from "@material-ui/icons";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import Fade from "@material-ui/core/Fade";
+import Modal from "@material-ui/core/Modal";
+import DeleteItemModal from "./DeleteItemModal";
 
 const Dashboard = (
     {
@@ -76,9 +76,6 @@ const Dashboard = (
     const [keyWord,setKeyWord] = useState('');
     const [isItemSelected, setItemSelected] = useState(false);
     const [searchCounter,setSearchCounter] = useState(0);
-    const [anchorEl, setAnchorEl] = useState(null); //for profile menu
-    const isMenuOpen = Boolean(anchorEl);
-    const menuId = 'primary-search-account-menu';
     const firstUpdate = useRef(true);
 
     useLayoutEffect(() => {
@@ -89,14 +86,6 @@ const Dashboard = (
 
     },[]);
 
-    const handleProfileMenuOpen = event => {
-        setAnchorEl(event.currentTarget);
-
-    };
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-
-    };
     const handleDrawerOpen = () => {
         setOpen(true);
 
@@ -105,6 +94,7 @@ const Dashboard = (
         setOpen(false);
 
     };
+
     const removeItem = () => {
         removeSelectedItem();
         closeSearchPage();
@@ -151,23 +141,9 @@ const Dashboard = (
         setSearchPage(false)
 
     };
+
     console.log(user);
-
     console.log(profile);
-
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>{profile ? (profile.user.firstName+" "+ profile.user.lastName) : null}</MenuItem>
-        </Menu>
-    );
 
     const displayTheRightComponent = () => {
         if(isItemSelected && !openSearchPage)
@@ -209,11 +185,19 @@ const Dashboard = (
                             <InitialDashboardButton
                                 variant="contained"
                                 disableRipple
-                                className={classes.margin}
+                                className={classes.priceBtnLg}
                                 onClick={removeItem}
                             >
                                 Price Tracker
                             </InitialDashboardButton>
+                            <Button
+                                variant="contained"
+                                disableRipple
+                                className={classes.priceBtnSm}
+                                onClick={removeItem}
+                            >
+                                PT
+                            </Button>
                         </Typography>
                         <div className={classes.search}>
                             <Paper component="form" className={searchBarClasses.root}>
@@ -231,24 +215,12 @@ const Dashboard = (
                             </Paper>
                         </div>
                         <div className={classes.grow} />
-                        <IconButton
-                            style={{margin: "0px 3px"}}
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
                         <Fragment>
                             <NavLink to='#!' onClick={logout} className='link'>
                                 <Button color='inherit' >Logout</Button>
                             </NavLink>
                         </Fragment>
                     </Toolbar>
-                    {renderMenu}
                 </AppBar>
                 <Drawer
                     className={classes.drawer}
@@ -317,6 +289,8 @@ const Dashboard = (
                                 <ListItemText primary={cryptoItem.cryptoName} />
                             </ListItem>
                         ))}
+                        <Divider/>
+                        <DeleteItemModal/>
                     </List>
                 </Drawer>
                 <main

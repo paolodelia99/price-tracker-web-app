@@ -92,14 +92,18 @@ const InitialPage =
     return (
         <Fragment>
             <Container maxWidth='lg' className={classes.container}>
-                <Grid container spacing={3}>
-                    <Grid item md={12}>
-                        <Typography variant='h4' align='center' className={classes.text}>
-                            Welcome {user && user.firstName}
-                        </Typography>
-                        <Typography variant='h5' align='center' className={classes.text}>
-                            Take a look to this:
-                        </Typography>
+                <Grid container spacing={3} className='initial-page-wrapper'>
+                    <Grid item md={12} className='inital-page-div-text-container'>
+                        <div className='inital-page-text-container'>
+                            <Typography variant='h4' align='center' className={classes.text}>
+                                Welcome {user && user.firstName}
+                            </Typography>
+                        </div>
+                        <div className='inital-page-text-container'>
+                            <Typography variant='h5' align='center' className={classes.text}>
+                                Take a look to this:
+                            </Typography>
+                        </div>
                     </Grid>
                     <Grid item md={12} className='selected-item-wrapper'>
                         {selectRandom()}

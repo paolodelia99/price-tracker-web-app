@@ -11,8 +11,8 @@ const Spinner = () => {
                 justifyContent: 'center'}}>
                 <div style={{
                     margin: 'auto',
-                    height:'300px',
-                    width: '300px',
+                    height:'400px',
+                    width: '400px',
                     background: 'none',
                     color: 'white',
                     display: 'flex',

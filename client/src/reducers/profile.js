@@ -6,6 +6,10 @@ import {
     ADD_CRYPTO,
     ADD_FOREX,
     ADD_STOCK,
+    DELETE_STOCK,
+    DELETE_FOREX,
+    DELETE_CRYPTO,
+    GET_FINANCIAL_DATA,
     SET_SELECTED_ITEM,
     REMOVE_SELECTED_ITEM
 } from "../actions/types";
@@ -29,11 +33,15 @@ export default function (state= initialState,action) {
             return{
                 ...state,
                 profile: payload,
+                loading: false
+            };
+        case GET_FINANCIAL_DATA:
+            return {
+                ...state,
                 stocksCollection: payload.stocks,
                 forexCollection: payload.forex,
                 cryptoCollection: payload.crypto,
-                loading: false
-            };
+            }
         case ADD_STOCK:
             return {
                 ...state,
@@ -50,6 +58,24 @@ export default function (state= initialState,action) {
             return {
                 ...state,
                 cryptoCollection: payload.crypto,
+                loading: false
+            };
+        case DELETE_STOCK:
+            return {
+                ...state,
+                stocksCollection: state.stocksCollection.filter(stock => stock._id !== payload),
+                loading: false
+            };
+        case DELETE_CRYPTO:
+            return {
+                ...state,
+                forexCollection: state.forexCollection.filter(forex => forex._id !== payload),
+                loading: false
+            };
+        case DELETE_FOREX:
+            return {
+                ...state,
+                cryptoCollection: state.cryptoCollection.filter(crypto => crypto._id !== payload),
                 loading: false
             };
         case PROFILE_ERROR:

@@ -57,9 +57,9 @@ export const dashboardStyle = makeStyles(theme => ({
         marginLeft: 0,
     },
     title: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
+        display: 'block',
+        [theme.breakpoints.down('sm')]: {
+            margin: theme.spacing(1)
         },
     },
     grow: {
@@ -72,6 +72,47 @@ export const dashboardStyle = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
     },
+    priceBtnLg:{
+        margin: theme.spacing(1),
+        display: 'block',
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        }
+    },
+    priceBtnSm: {
+        margin: theme.spacing(1),
+        display: 'none',
+        boxShadow: 'none',
+        textTransform: 'none',
+        fontSize: 20,
+        padding: '6px',
+        lineHeight: 1.5,
+        color: 'white',
+        backgroundColor: 'transparent',
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:hover': {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+        },
+        '&:active': {
+            boxShadow: 'none',
+            backgroundColor: 'transparent',
+        },
+        [theme.breakpoints.down('md')]: {
+            display: 'block'
+        }
+    },
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -81,10 +122,17 @@ export const dashboardStyle = makeStyles(theme => ({
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        width: '30%',
+        [theme.breakpoints.up('md')]: {
             marginLeft: theme.spacing(3),
-            width: 'auto',
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: theme.spacing(2),
+            width: '50%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: theme.spacing(4),
+            width: '50%',
         },
     },
     searchIcon: {

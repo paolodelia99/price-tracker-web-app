@@ -154,8 +154,8 @@ router.post('/newCrypto/', auth, async (req,res)=>{
     }
 );
 
-// @route    POST api/profile/deleteCrypto/:id
-// @desc     Delete  crypto
+// @route    POST api/profile/deleteStock/:id
+// @desc     Delete a stock
 // @access   Private
 router.delete('/deleteStock/:id', auth, async (req,res)=>{
         const errors = validationResult(req);
