@@ -3,7 +3,6 @@ const router = express.Router();
 const request = require('request');
 const config = require('config');
 const apiKey = config.get('ALPHA_API_KEY');
-const apiKey2 = config.get('ALPHA_API_KEY_2')
 
 // @route    GET api/forex/exchange-rate/:from_currency/:to_currency
 // @desc     get exchange rate
@@ -43,25 +42,6 @@ router.get('/getForex/:time_frame/:from_currency/:to_currency',async (req,res)=>
     }
 });
 
-// @route    GET api/forex/getForex/:time_frame/:from_currency/:to_currency
-// @desc     get data ccording to the requested timeframe
-// @access   Public
-router.get('/getForex2/:time_frame/:from_currency/:to_currency',async (req,res)=>{
-
-    let timeFrame = getTimeFrame(req.params.time_frame);
-
-    try{
-        await request(`https://www.alphavantage.co/query?function=${timeFrame}&from_symbol=${req.params.from_currency}&to_symbol=${req.params.to_currency}&outputsize=compact&apikey=${apiKey2}`,
-            (err,response, body) => {
-                const content = JSON.parse(body);
-
-                res.json(content)
-            })
-    }catch (e) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
 
 const getTimeFrame = (timeFrame) => {
     switch (timeFrame) {

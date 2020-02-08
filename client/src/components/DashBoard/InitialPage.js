@@ -46,8 +46,6 @@ const InitialPage =
                 return (<ForexItem />);
             case 3:
                 let randomCrypto = getRandomCrypto();
-                //get Markets
-                //check a random physical currency in the market and take the exchange
                 takeOutEveryThing();
                 getCrypto(randomCrypto);
                 return (<CryptoItem isNew={true}/>);
