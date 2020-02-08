@@ -66,13 +66,12 @@ export default function (state= initialState,action) {
                 stocksCollection: state.stocksCollection.filter(stock => stock._id !== payload),
                 loading: false
             };
-        case DELETE_CRYPTO:
+        case DELETE_FOREX:
             return {
                 ...state,
                 forexCollection: state.forexCollection.filter(forex => forex._id !== payload),
-                loading: false
             };
-        case DELETE_FOREX:
+        case DELETE_CRYPTO:
             return {
                 ...state,
                 cryptoCollection: state.cryptoCollection.filter(crypto => crypto._id !== payload),

@@ -72,7 +72,10 @@ For the folder structure I've done in this way:
 ├── package.json
 ├── client
 ├── config
+│   ├── db.js
+│   └── default.json
 ├── middleware
+│   └── auth.js
 ├── models
 │   ├── Profile.js
 │   └── User.js
@@ -104,7 +107,8 @@ For the backend I've imported the following packages from npm:
  <br/>
  <br/>
  And as the devs dependencies I've used: 
- - concurrently: for running the server and the client at the same time, without having two terminal opened at the same time
+ 
+- concurrently: for running the server and the client at the same time, without having two terminal opened at the same time
 - nodemon: a utility that will monitor for any changes in your source and automatically restart your server
 
 ---

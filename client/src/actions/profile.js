@@ -159,6 +159,7 @@ export const deleteStock = (id) => async dispatch => {
 //Delete forex
 export const deleteForex = (id) => async dispatch => {
     try {
+        console.log(`forex._id ${id}`);
         await axios.delete(`api/profile/deleteForex/${id}`)
 
         dispatch({
@@ -174,6 +175,7 @@ export const deleteForex = (id) => async dispatch => {
 //Delete crypto
 export const deleteCrypto = (id) => async dispatch => {
     try {
+        console.log(`crypto._id ${id}`);
         await axios.delete(`api/profile/deleteCrypto/${id}`)
 
         dispatch({

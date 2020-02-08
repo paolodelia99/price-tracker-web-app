@@ -23,7 +23,6 @@ let randomWords = require('random-words');
 const InitialPage =
     ({
          auth:{user},
-         profile :{profile,loading,stocksCollection,forexCollection,cryptoCollection},
          takeOutEveryThing,
          getRandomStock,
          getForex,
@@ -116,7 +115,6 @@ const InitialPage =
 
 InitialPage.propTypes = {
     auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired,
     takeOutEveryThing: PropTypes.func.isRequired,
     getCrypto: PropTypes.func.isRequired,
     getForex: PropTypes.func.isRequired,
@@ -124,8 +122,7 @@ InitialPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
-    profile: state.profile
+    auth: state.auth
 });
 
 export default
