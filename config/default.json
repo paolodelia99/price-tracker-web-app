@@ -3,5 +3,5 @@
   "CRYPTO_API_KEY": "",
   "WORLD_TRADE_API_KEY": "",
   "mongoURI": "",
-  "jwtSecret": ""
+  "jwtSecret": "priceTracker"
 }

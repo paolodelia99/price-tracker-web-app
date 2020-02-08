@@ -1,7 +1,7 @@
 {
   "name": "price-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full web application that tracks your favourite stocks, forex exchange and crypto currencies",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -11,8 +11,8 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Paolo D'Elia",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "config": "^3.2.5",
@@ -27,5 +27,8 @@
   "devDependencies": {
     "concurrently": "^5.1.0",
     "nodemon": "^2.0.2"
+  },
+  "engines": {
+    "node": "12.13.1"
   }
 }
