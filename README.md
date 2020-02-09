@@ -4,8 +4,8 @@ Do you want to keep track of your favourite stocks? Do you want to be update wit
 <br/>
 This web app is for you! 
 
-Since I'm little bit interesting in finance, I was thinking about creating my own app that keep tracks of all my favorites stock, forex exchange and cripocurrency.
-And now that I have the skills to do it, I made it!
+Since I'm little bit interesting in finance, I was thinking about creating my own app that keep tracks of all my favorites stock, forex exchange and crypto currencies.
+And now that I have the skills to do it, I did it!
 
 ---
 
