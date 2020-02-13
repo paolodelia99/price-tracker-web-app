@@ -211,7 +211,6 @@ const Dashboard = (
                                 <IconButton type="submit" onClick={ e => setSearchPageOpen(e)} className={searchBarClasses.iconButton} aria-label="search">
                                     <SearchIcon />
                                 </IconButton>
-                                <Divider className={searchBarClasses.divider} orientation="vertical" />
                             </Paper>
                         </div>
                         <div className={classes.grow} />

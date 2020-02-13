@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const config = require('config');
-const apiKey = config.get('ALPHA_API_KEY');
+require('dotenv').config();
+const apiKey = process.env.ALPHA_API_KEY;
 
 // @route    GET api/forex/exchange-rate/:from_currency/:to_currency
 // @desc     get exchange rate

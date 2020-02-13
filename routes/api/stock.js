@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const config = require('config');
-const apiKey = config.get('ALPHA_API_KEY');
-const worldTradeApiKey = config.get('WORLD_TRADE_API_KEY');
+require('dotenv').config();
+const apiKey = process.env.ALPHA_API_KEY
+const worldTradeApiKey = process.env.WORLD_TRADE_API_KEY
 
 // @route    GET api/stock/getStock/:time_frame/:stock_name
 // @desc     get price of a stock based on the requested timeframe
