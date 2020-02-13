@@ -1,7 +1,7 @@
 {
-  "ALPHA_API_KEY": "",
-  "CRYPTO_API_KEY": "",
-  "WORLD_TRADE_API_KEY": "",
-  "mongoURI": "",
+  "ALPHA_API_KEY": "2R9XUCRT0D21IUVX",
+  "CRYPTO_API_KEY": "f43e33fc2b0884e1b21d175aa4841176644589c29e39ca604b5a849109d20e75",
+  "WORLD_TRADE_API_KEY": "sEMnpUcIpoP2dyEKgj2sWulqzUwLAt7wReuYdMkeUtr1B7y5lBlCf45sKWao",
+  "mongoURI": "mongodb+srv://PaoloTrade:Uyy6fsdpHScRWg8I@price-tracker-cluster-dzzzh.mongodb.net/test?retryWrites=true&w=majority",
   "jwtSecret": "priceTracker"
 }
