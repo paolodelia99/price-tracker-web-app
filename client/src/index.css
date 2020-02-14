@@ -18,6 +18,16 @@ body{
   height: 100%;
 }
 
+.landing-main-title{
+  font-size: 3rem!important;
+  color: inherit;
+  text-align: center;
+  font-family: Roboto Helvetica Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.000938em;
+}
+
 /*AppNavbar*/
 .link{
   color: white;

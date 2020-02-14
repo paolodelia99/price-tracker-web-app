@@ -72,7 +72,7 @@ export const addNewStock = (newStock) => async dispatch => {
     };
 
     try {
-        const res = await axios.post('/api/profile/newStock/',newStock,config);
+        const res = await axios.post('/api/profile/newStock/', newStock, config);
 
         dispatch({
             type:ADD_STOCK,
@@ -196,7 +196,6 @@ export const removeSelectedItem = () => dispatch => {
 // Create or update profile
 export const createProfile = (
     formData,
-    history,
     edit = false
 ) => async dispatch => {
     try {
@@ -214,10 +213,6 @@ export const createProfile = (
         });
 
         dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
-
-        if (!edit) {
-            history.push('/dashboard');
-        }
     } catch (err) {
         const errors = err.response.data.errors;
 
