@@ -8,6 +8,7 @@ import ProductValues from "./ProductValues";
 import ProductHowItWorks from "./ProductHowItWorks";
 import {landingTheme} from '../styles/landingTheme';
 import AppNavbar from '../Layout/AppNavbar'
+import Footer from './LandingFooter'
 
 const LandingPage = ({isAuthenticated}) => {
     if(isAuthenticated){
@@ -21,6 +22,7 @@ const LandingPage = ({isAuthenticated}) => {
                 <ProductHero/>
                 <ProductValues/>
                 <ProductHowItWorks/>
+                <Footer />
             </section>
         </ThemeProvider>
     );

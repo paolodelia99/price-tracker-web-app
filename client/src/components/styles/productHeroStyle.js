@@ -12,7 +12,6 @@ export const productHeroStyle = makeStyles(theme => ({
     },
     mainTitle: {
       fontSize: '3rem',
-
     },
     h5: {
         marginBottom: theme.spacing(4),

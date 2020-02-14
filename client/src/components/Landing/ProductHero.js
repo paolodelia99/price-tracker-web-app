@@ -16,7 +16,7 @@ function ProductHero(props) {
             <Typography className='landing-main-title'>
                 Track Your Favourites Stock
             </Typography>
-            <Typography color="inherit" align="center" className={classes.h5}>
+            <Typography className="h5-section">
                 The web app you're missing for your favorites financial facilities
             </Typography>
             <Link to='/register' className='link'>
@@ -29,7 +29,7 @@ function ProductHero(props) {
                     Register
                 </Button>
             </Link>
-            <Typography variant="body2" color="inherit" className={classes.more}>
+            <Typography className="more-section">
                 Discover the experience
             </Typography>
         </ProductHeroLayout>

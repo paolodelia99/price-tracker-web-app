@@ -25,8 +25,7 @@ function ProductValues(props) {
                                 Stocks
                             </Typography>
                             <Typography >
-                                {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-                                {', go for a mini-vacation just a few subway stops away from your home.'}
+                                {'You can find all the shares listed on nasdaq, and check different time frames charts!'}
                             </Typography>
                         </div>
                     </Grid>
@@ -37,8 +36,8 @@ function ProductValues(props) {
                                 Forex exchanges
                             </Typography>
                             <Typography>
-                                {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-                                {'your Sundays will not be alike.'}
+                                {'Do you want to know how the markets reacted after the Bexit?'}
+                                {'Check the most important forex exchanges in the market! '}
                             </Typography>
                         </div>
                     </Grid>
@@ -49,8 +48,7 @@ function ProductValues(props) {
                                 Cryptocurrencies
                             </Typography>
                             <Typography >
-                                {'By registering, you will access specially negotiated rates '}
-                                {'that you will not find anywhere else.'}
+                                {'Stay Updated on the most important cryptocurrency'}
                             </Typography>
                         </div>
                     </Grid>
