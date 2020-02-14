@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState,useRef,useLayoutEffect} from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
@@ -27,6 +27,16 @@ const Register = ({setAlert, register, isAuthenticated}) => {
         password: '',
         password2: ''
     });
+    const[submitCounter,setSubmitCounter] = useState(0)
+    const firstUpdate = useRef(true);
+
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        register({ firstName,lastName, email, password });
+    },[submitCounter]);
 
     const { firstName,lastName, email, password, password2 } = formData;
 
@@ -38,7 +48,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
         if (password !== password2) {
             setAlert('Passwords do not match', 'danger');
         } else {
-            register({ firstName,lastName, email, password });
+            setSubmitCounter(submitCounter => submitCounter + 1)
         }
     };
 
@@ -124,7 +134,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                         value={password2}
                                         name="password2"
                                         label="Confirm password"
-                                        type="password2"
+                                        type="password"
                                         id="password2"
                                         autoComplete="current-password"
                                         onChange={ e => onChange(e)}

@@ -11,15 +11,19 @@ import {
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from "./alert";
+import {createProfile} from "./profile";
 
 //Load User
-export const loadUser = () => async dispatch => {
+export const loadUser = (register) => async dispatch => {
     if(localStorage.token){
         setAuthToken(localStorage.token)
     }
 
     try{
         const res = await axios.get('/api/auth');
+
+        if(register)
+            dispatch(createProfile(res.data))
 
         dispatch({
             type: USER_LOADED,
@@ -33,24 +37,24 @@ export const loadUser = () => async dispatch => {
 };
 
 // Register User
-export const register = ({ name, email, password }) => async dispatch => {
+export const register = ({ firstName,lastName, email, password }) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ firstName,lastName, email, password });
 
     try {
-        const res = await axios.post('/api/users', body, config);
+        const res = await axios.post('/api/user', body, config);
 
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         });
 
-        dispatch(loadUser());
+        dispatch(loadUser(true));
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -82,7 +86,7 @@ export const login = (email, password) => async dispatch => {
             payload: res.data
         });
 
-        dispatch(loadUser());
+        dispatch(loadUser(false));
     } catch (err) {
         const errors = err.response.data.errors;
 
