@@ -7,8 +7,6 @@ This web app is for you!
 Since I'm little bit interesting in finance, I was thinking about creating my own app that keep tracks of all my favorites stock, forex exchange and crypto currencies.
 And now that I have the skills to do it, I did it!
 
----
-
 # App Info
 
 Tools that I've used to build this app:
@@ -111,4 +109,74 @@ For the backend I've imported the following packages from npm:
 - concurrently: for running the server and the client at the same time, without having two terminal opened at the same time
 - nodemon: a utility that will monitor for any changes in your source and automatically restart your server
 
----
+### Models
+
+I have to models in my models folder. One is for the user and the other is for the profile.
+The user model is pretty simple:
+
+```javascript
+const mongoose = require('mongoose');
+
+const userSchema = mongoose.Schema({
+    firstName : {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+});
+
+module.exports = mongoose.model('user',userSchema);
+```
+
+While the Profile model has a reference to the user model id, and it stores all the stocks, forex exchanges and cryptocurrencies
+
+```javascript
+const mongoose = require('mongoose');
+
+const ProfileSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    stocks : {
+        type: Array,
+        required: true,
+        default: []
+    },
+    crypto : {
+        type: Array,
+        required: true,
+        default: []
+    },
+    forex : {
+        type: Array,
+        required: true,
+        default: []
+    }
+});
+
+module.exports = mongoose.model('Profile',ProfileSchema);
+```
+
+### Routes
+
+As you've seen in the folder structure that I'e previously showed, I've created six routes: 
+the <b>auth route</b> allows to authenticate the user; the <b>user route</b> that allows to register a new user;
+the <b>profile route</b> that can retrive the user info, add a new stock, new forex and a new cripto;
+while the <b>stock, forex and crypto routes</b> are used for do the request to Alpha vantage, or any other api,
+for getting the financial info.
+
+
+
+to finish
