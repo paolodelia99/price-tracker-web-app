@@ -15,18 +15,18 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "config": "^3.2.5",
-    "create-react-app": "^3.3.1",
+    "config": "^3.3.1",
+    "create-react-app": "^3.4.1",
     "express": "^4.17.1",
-    "express-validator": "^6.3.1",
+    "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.10",
-    "request": "^2.88.0",
+    "mongoose": "^5.9.10",
+    "request": "^2.88.2",
     "uninstall": "0.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   },
   "engines": {
     "node": "12.13.1"
